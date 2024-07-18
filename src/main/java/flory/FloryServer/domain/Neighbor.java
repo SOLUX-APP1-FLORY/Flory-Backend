@@ -15,8 +15,7 @@ import java.util.List;
 public class Neighbor extends BaseEntity {
 
     @Id
-    // 기본 키 생성
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본 키 생성
     private Long id;
 
     @OneToMany(mappedBy = "neighbor", cascade = CascadeType.ALL)
