@@ -32,11 +32,11 @@ public class Diary {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User userID;
+    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_nickname")
-    private User userNickname;
+    private User userNickname;*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flower_id")
