@@ -32,9 +32,9 @@ public class Flower extends BaseEntity {
     @Setter
     private String flower_url;
 
-    @OneToMany(mappedBy = "Flower", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
     private List<Diary> DiaryList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Flower", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
     private List<Gift> GiftList = new ArrayList<>();
 }
