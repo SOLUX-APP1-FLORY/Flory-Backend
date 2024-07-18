@@ -18,13 +18,14 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@IdClass(UserId.class)
+// @IdClass(UserId.class)
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Id
+    // @Id
+    @Column(nullable = false, length = 20)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
@@ -40,13 +41,13 @@ public class User extends BaseEntity {
     @Column(nullable = false, columnDefinition = "VARCHAR(50)")
     private String password;
 
-    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Diary> DiaryList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Gift> GiftList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Relationship> RelationshipList = new ArrayList<>();
 
 
