@@ -1,4 +1,4 @@
-package domain;
+package flory.FloryServer.domain;
 
 import java.io.Serializable;
 import java.util.Objects;

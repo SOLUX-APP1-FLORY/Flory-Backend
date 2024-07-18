@@ -1,6 +1,6 @@
-package domain;
+package flory.FloryServer.domain;
 
-import domain.common.BaseEntity;
+import flory.FloryServer.domain.common.BaseEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;

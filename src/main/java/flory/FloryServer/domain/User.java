@@ -1,7 +1,7 @@
-package domain;
+package flory.FloryServer.domain;
 
-import domain.common.BaseEntity;
-import domain.enums.Gender;
+import flory.FloryServer.domain.common.BaseEntity;
+import flory.FloryServer.domain.enums.Gender;
 import lombok.*;
 
 import javax.persistence.*;
