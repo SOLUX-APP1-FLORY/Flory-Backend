@@ -1,4 +1,4 @@
-package domain.common;
+package flory.FloryServer.domain.common;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
