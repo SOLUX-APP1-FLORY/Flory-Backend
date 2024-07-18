@@ -1,12 +1,16 @@
 package flory.FloryServer.domain;
 
-import flory.FloryServer.domain.common.BaseEntity;
+
+import flory.FloryServer.domain.base.BaseEntity;
 import flory.FloryServer.domain.enums.Gender;
+import flory.FloryServer.domain.mapping.Relationship;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -43,7 +47,7 @@ public class User extends BaseEntity {
     private List<Gift> GiftList = new ArrayList<>();
 
     @OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
-    private List<Relationship> GiftList = new ArrayList<>();
+    private List<Relationship> RelationshipList = new ArrayList<>();
 
 
 }
