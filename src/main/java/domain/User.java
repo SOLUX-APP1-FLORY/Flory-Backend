@@ -45,9 +45,5 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "User", cascade = CascadeType.ALL)
     private List<Relationship> GiftList = new ArrayList<>();
 
-    public void updateProfile(String nickname, Gender gender) {
-        this.nickname = nickname;
-        this.gender = gender;
-    }
 
 }

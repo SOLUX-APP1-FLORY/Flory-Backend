@@ -2,7 +2,6 @@ package domain;
 
 import domain.common.BaseEntity;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 
