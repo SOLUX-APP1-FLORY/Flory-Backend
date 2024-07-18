@@ -25,6 +25,7 @@ public class User extends BaseEntity {
     private Long id;
 
     // @Id
+    // 복합키?
     @Column(nullable = false, length = 20)
     private String nickname;
 
