@@ -3,9 +3,7 @@ package flory.FloryServer.domain;
 import flory.FloryServer.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
