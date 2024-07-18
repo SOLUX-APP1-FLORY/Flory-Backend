@@ -1,8 +1,8 @@
 package flory.FloryServer.domain;
 
+import lombok.*;
 import flory.FloryServer.domain.enums.FlowerMeaning;
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity
 @Getter
