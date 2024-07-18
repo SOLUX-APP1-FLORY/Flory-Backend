@@ -1,9 +1,14 @@
 package flory.FloryServer.domain;
 
-import flory.FloryServer.domain.common.BaseEntity;
+import flory.FloryServer.domain.base.BaseEntity;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
-import javax.persistence.*;
+
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
