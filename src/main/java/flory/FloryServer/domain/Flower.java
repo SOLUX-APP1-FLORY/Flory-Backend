@@ -1,9 +1,14 @@
 package flory.FloryServer.domain;
 
-import flory.FloryServer.domain.common.BaseEntity;
+import flory.FloryServer.domain.base.BaseEntity;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
-import javax.persistence.*;
+
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,9 +32,9 @@ public class Flower extends BaseEntity {
     @Setter
     private String flower_url;
 
-    @OneToMany(mappedBy = "Flower", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
     private List<Diary> DiaryList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Flower", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
     private List<Gift> GiftList = new ArrayList<>();
 }
