@@ -24,8 +24,18 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // @Id
-    // 복합키?
+    @Column(nullable = false, length = 20)
+    private String uid;
+
+    @Column(nullable = false, columnDefinition = "VARCHAR(50)")
+    private String password;
+
+    @Column(nullable = false, columnDefinition = "VARCHAR(50)")
+    private String email;
+
+    @Column(nullable = false, length = 20)
+    private String phoneNum;
+
     @Column(nullable = false, length = 20)
     private String nickname;
 
@@ -35,12 +45,6 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDate birthdate;
-
-    @Column(nullable = false, columnDefinition = "VARCHAR(50)")
-    private String email;
-
-    @Column(nullable = false, columnDefinition = "VARCHAR(50)")
-    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Diary> DiaryList = new ArrayList<>();
