@@ -33,17 +33,17 @@ public class User extends BaseEntity {
     @Column(nullable = false, columnDefinition = "VARCHAR(50)")
     private String email;
 
-    @Column(nullable = false, length = 20)
+    //@Column(nullable = false, length = 20)
     private String phoneNum;
 
-    @Column(nullable = false, length = 20)
+    //@Column(nullable = false, length = 20)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "VARCHAR(10)")
+    //@Column(nullable = false, columnDefinition = "VARCHAR(10)")
     private Gender gender;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private LocalDate birthdate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
