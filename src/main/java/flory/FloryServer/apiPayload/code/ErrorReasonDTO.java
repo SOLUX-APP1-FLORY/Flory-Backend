@@ -9,7 +9,11 @@ import org.springframework.http.HttpStatus;
 public class ErrorReasonDTO {
 
     private final HttpStatus httpStatus;
+
     private final String code;
     private final String message;
     private final boolean isSuccess;
+
+    // 코드 추가
+    public boolean getIsSuccess(){return isSuccess;}
 }
