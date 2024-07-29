@@ -25,11 +25,12 @@ public class User extends BaseEntity {
     private Long id;
 
     // @Id
-    @Column(nullable = false, length = 20)
+    // 복합키?
+    @Column(length = 20)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "VARCHAR(10)")
+    @Column(columnDefinition = "VARCHAR(10)")
     private Gender gender;
 
     @Column(nullable = false)
@@ -51,4 +52,8 @@ public class User extends BaseEntity {
     private List<Relationship> RelationshipList = new ArrayList<>();
 
 
+    public void updateProfile(String nickname, Gender gender) {
+        this.nickname = nickname;
+        this.gender = gender;
+    }
 }
