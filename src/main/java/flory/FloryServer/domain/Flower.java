@@ -33,6 +33,10 @@ public class Flower {
     @Setter
     private String flower_url;
 
+    @Getter
+    @Setter
+    private String bouquet_url;
+
     @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
     private List<Diary> DiaryList = new ArrayList<>();
 
