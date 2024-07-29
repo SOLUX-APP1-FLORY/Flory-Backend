@@ -31,5 +31,6 @@ public class ApiResponse<T> {
     // 실패한 경우 응답 생성
     public static <T> ApiResponse<T> onFailure(String code, String message, T data) { //Boolean isSuccess,
         return new ApiResponse<>(false, code, message, data);
+
     }
 }
