@@ -2,10 +2,12 @@ package flory.FloryServer.apiPayload.exception;
 
 import flory.FloryServer.apiPayload.code.BaseErrorCode;
 import flory.FloryServer.apiPayload.code.ErrorReasonDTO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 @Getter
 @AllArgsConstructor
-public class GeneralException extends RuntimeException {
+public class GeneralException extends RuntimeException{
 
     private BaseErrorCode code;
 
@@ -16,4 +18,5 @@ public class GeneralException extends RuntimeException {
     public ErrorReasonDTO getErrorReasonHttpStatus(){
         return this.code.getReasonHttpStatus();
     }
+
 }
