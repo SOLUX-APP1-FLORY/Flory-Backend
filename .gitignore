@@ -25,6 +25,8 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+src/main/java/flory/FloryServer/config/FirebaseConfig.java
+src/main/java/flory/resources/flory-backend-firebase-adminsdk-jwlfw-1d814b9a79.json
 
 ### NetBeans ###
 /nbproject/private/

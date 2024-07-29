@@ -15,8 +15,11 @@ public class Relationship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)  // N:1에서 N에 해당하는 엔티티가 1에 해당하는 엔티티와 매핑
-    @JoinColumn(name = "user_id")       // 실제 데이터베이스에서 해당하는 칼럼명
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            @JoinColumn(name = "user_nickname", referencedColumnName = "nickname")
+    })
     private User user;
 
     /*@ManyToOne(fetch = FetchType.LAZY)
