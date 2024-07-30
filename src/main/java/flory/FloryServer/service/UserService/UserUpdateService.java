@@ -26,6 +26,7 @@ public class UserUpdateService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setNickname(requestDTO.getNickname());
+            user.setGender(requestDTO.getGender());
 
             userRepository.save(user);
 

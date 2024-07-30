@@ -3,10 +3,10 @@ package flory.FloryServer.domain.enums;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum Gender {
-    @JsonProperty("male")
+    @JsonProperty("MALE")
     MALE,
 
-    @JsonProperty("female")
+    @JsonProperty("FEMALE")
     FEMALE;
 }
 

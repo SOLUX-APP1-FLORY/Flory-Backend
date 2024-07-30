@@ -18,9 +18,9 @@ public class UserUpdateController {
 
     @PatchMapping("/member")
     public ApiResponse<UserUpdateResponseDTO.UpdateResultDTO> userUpdate(@RequestBody @Valid UserUpdateRequestDTO.UpdateDTO requestDTO) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //String userId = authentication.getName();
-        String userId = "seefar";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+
         // 사용자 정보 업데이트
         UserUpdateResponseDTO.UpdateResultDTO resultDTO = userUpdateService.updateUser(userId, requestDTO);
 
