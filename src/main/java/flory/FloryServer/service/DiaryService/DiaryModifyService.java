@@ -2,15 +2,10 @@ package flory.FloryServer.service.DiaryService;
 
 import flory.FloryServer.domain.Diary;
 import flory.FloryServer.domain.Flower;
-import flory.FloryServer.domain.User;
-import flory.FloryServer.domain.enums.Gender;
 import flory.FloryServer.repository.DiaryRepository;
 import flory.FloryServer.repository.FlowerRepository;
-import flory.FloryServer.repository.UserRepository;
 import flory.FloryServer.web.dto.DiaryModifyRequestDTO;
 import flory.FloryServer.web.dto.DiaryModifyResponseDTO;
-import flory.FloryServer.web.dto.UserUpdateRequestDTO;
-import flory.FloryServer.web.dto.UserUpdateResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +42,8 @@ public class DiaryModifyService {
         return DiaryModifyResponseDTO.ModifyResultDTO.builder()
                 .diary_id(diary.getId())
                 .flower_id(flower.getId())
-                .flower(flower.getFlower_name())
-                .flower_meaning(flower.getFlower_meaning())
+                .flower(flower.getFlowerName())
+                .flower_meaning(flower.getFlowerMeaning())
                 .title(diary.getTitle())
 
 

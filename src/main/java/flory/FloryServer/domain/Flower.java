@@ -23,19 +23,19 @@ public class Flower {
 
     @Getter
     @Setter
-    private String flower_name;
+    private String flowerName;
 
     @Getter
     @Setter
-    private String flower_meaning;
+    private String flowerMeaning;
 
     @Getter
     @Setter
-    private String flower_url;
+    private String flowerUrl;
 
     @Getter
     @Setter
-    private String bouquet_url;
+    private String bouquetUrl;
 
     @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
     private List<Diary> DiaryList = new ArrayList<>();
