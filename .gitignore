@@ -5,7 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-# STS
+# STS (Spring Tool Suite)
 .apt_generated
 .classpath
 .factorypath
@@ -38,4 +38,4 @@ out/
 
 # Ignore specific files
 src/main/java/flory/FloryServer/config/FirebaseConfig.java
-src/main/java/flory/resources/flory-backend-firebase-adminsdk-jwlfw-1d814b9a79.json
+src/main/resources/flory-backend-firebase-adminsdk-jwlfw-1d814b9a79.json
