@@ -21,7 +21,7 @@ public class UserRestController {
 
     private final UserCommandService userCommandService;
 
-    @PostMapping("/")
+    @PostMapping("/signup ")
     public ApiResponse<UserResponseDTO.JoinResultDTO> join(@RequestBody @Valid UserRequestDTO.JoinDTO request) {
         // return null;
         User user = userCommandService.joinUser((request));
