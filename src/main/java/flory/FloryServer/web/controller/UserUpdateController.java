@@ -17,7 +17,7 @@ public class UserUpdateController {
     private final UserUpdateService userUpdateService;
 
     @PatchMapping("/member")
-    public ApiResponse<UserUpdateResponseDTO.UpdateResultDTO> userUpdate(@RequestHeader UserUpdateRequestDTO.UpdateDTO requestHDTO, @RequestBody @Valid UserUpdateRequestDTO.UpdateDTO requestDTO) {
+    public ApiResponse<UserUpdateResponseDTO.UpdateResultDTO> userUpdate(@RequestHeader String token, @RequestBody @Valid UserUpdateRequestDTO.UpdateDTO requestDTO) {
         int id = requestDTO.getId();
 
         // 사용자 정보 업데이트
