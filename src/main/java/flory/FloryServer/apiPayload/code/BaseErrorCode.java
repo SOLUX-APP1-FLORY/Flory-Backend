@@ -6,3 +6,4 @@ public interface BaseErrorCode {
 
     public ErrorReasonDTO getReasonHttpStatus();
 }
+

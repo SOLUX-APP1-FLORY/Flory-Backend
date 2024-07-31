@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,25 +17,25 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Flower extends BaseEntity {
+public class Flower {
     @Id
     private int id; //꽃 아이디
 
     @Getter
     @Setter
-    private String flower_name;
+    private String flowerName;
 
     @Getter
     @Setter
-    private String flower_meaning;
+    private String flowerMeaning;
 
     @Getter
     @Setter
-    private String flower_url;
+    private String flowerUrl;
 
     @Getter
     @Setter
-    private String bouquet_url;
+    private String bouquetUrl;
 
     @OneToMany(mappedBy = "flower", cascade = CascadeType.ALL)
     private List<Diary> DiaryList = new ArrayList<>();
