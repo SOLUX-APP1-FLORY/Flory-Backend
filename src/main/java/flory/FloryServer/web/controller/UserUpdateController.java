@@ -17,12 +17,11 @@ public class UserUpdateController {
     private final UserUpdateService userUpdateService;
 
     @PatchMapping("/member")
-    public ApiResponse<UserUpdateResponseDTO.UpdateResultDTO> userUpdate(@RequestBody @Valid UserUpdateRequestDTO.UpdateDTO requestDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
+    public ApiResponse<UserUpdateResponseDTO.UpdateResultDTO> userUpdate(@RequestHeader UserUpdateRequestDTO.UpdateDTO requestHDTO, @RequestBody @Valid UserUpdateRequestDTO.UpdateDTO requestDTO) {
+        int id = requestDTO.getId();
 
         // 사용자 정보 업데이트
-        UserUpdateResponseDTO.UpdateResultDTO resultDTO = userUpdateService.updateUser(userId, requestDTO);
+        UserUpdateResponseDTO.UpdateResultDTO resultDTO = userUpdateService.updateUser(id, requestDTO);
 
         // 성공 응답 생성
         return ApiResponse.onSuccess(resultDTO);

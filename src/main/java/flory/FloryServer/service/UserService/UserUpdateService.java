@@ -21,8 +21,8 @@ public class UserUpdateService {
     }
 
     @Transactional
-    public UserUpdateResponseDTO.UpdateResultDTO updateUser(String userId, UserUpdateRequestDTO.UpdateDTO requestDTO) {
-        Optional<User> userOptional = userRepository.findByUid(userId);
+    public UserUpdateResponseDTO.UpdateResultDTO updateUser(int id, UserUpdateRequestDTO.UpdateDTO requestDTO) {
+        Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setNickname(requestDTO.getNickname());
