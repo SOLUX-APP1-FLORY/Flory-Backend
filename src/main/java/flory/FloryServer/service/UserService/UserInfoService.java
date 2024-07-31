@@ -16,11 +16,14 @@ public class UserInfoService {
     private final JwtUtil jwtUtil;
 
     public UserInfoResponseDTO.InfoResultDTO InfoUser(String token) {
-        if (token == null || !jwtUtil.validateToken(token)) {
-            throw new RuntimeException("JWT Token is missing or invalid");
+        String jwtToken = token.substring(7); // 토큰에서 "Bearer " 부분 제거
+
+        if (!jwtUtil.validateToken(jwtToken)) {
+            throw new RuntimeException("Invalid token");
         }
 
-        String userId = jwtUtil.getUidFromToken(token);
+        String userId = jwtUtil.getUidFromToken(jwtToken);
+
         Optional<User> userOptional = userRepository.findByUid(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
