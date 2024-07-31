@@ -10,8 +10,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private String secretKey = "your_secret_key"; // 비밀 키expiration}")
-    private long expiration;
+    private String secretKey = "your_secret_key"; // 비밀 키
 
     public String generateToken(String username) {
         return Jwts.builder()

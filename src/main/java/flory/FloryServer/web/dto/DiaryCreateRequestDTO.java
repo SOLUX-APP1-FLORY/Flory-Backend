@@ -11,7 +11,7 @@ public class DiaryCreateRequestDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CreateDTO{
-        private String flower;
+        private String flowerName;
         private String title;
         private String content;
     }
