@@ -52,8 +52,6 @@ public class JwtAuthenticationController {
     public ApiResponse<LoginResponseDTO.loginDTO> createAuthenticationToken(@RequestBody LoginRequestDTO loginRequestDTO) {
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        logger.info("Attempting authentication for uid: {}", loginRequestDTO.getUid());
-        logger.info("Password: {}", loginRequestDTO.getPassword());
         try {
             // 인증 처리
             Authentication authentication = authenticationManager.authenticate(
@@ -68,7 +66,6 @@ public class JwtAuthenticationController {
             return ApiResponse.onSuccess(resultDTO);
         } catch (AuthenticationException e) {
             // 인증 실패 시 예외 처리
-            logger.info("Attempting authentication for uid:", e);
             return ApiResponse.onFailure("Login4001","Incorrect username or password",null);
         }
     }

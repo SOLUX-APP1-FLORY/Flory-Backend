@@ -1,7 +1,6 @@
 package flory.FloryServer.domain;
 
 import flory.FloryServer.domain.base.BaseEntity;
-import flory.FloryServer.domain.enums.FlowerMeaning;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +10,6 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-
 public class Diary extends BaseEntity {
 
     @Id
