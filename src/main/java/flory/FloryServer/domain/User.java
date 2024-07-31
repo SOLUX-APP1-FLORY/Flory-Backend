@@ -56,4 +56,8 @@ public class User extends BaseEntity {
     private List<Relationship> RelationshipList = new ArrayList<>();
 
 
+    public void updateProfile(String nickname, Gender gender) {
+        this.nickname = nickname;
+        this.gender = gender;
+    }
 }
