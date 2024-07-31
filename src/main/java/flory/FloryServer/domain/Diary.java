@@ -20,7 +20,7 @@ public class Diary extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private Integer date;
+    private String date;
 
     @Column(nullable = false)
     private String title;
