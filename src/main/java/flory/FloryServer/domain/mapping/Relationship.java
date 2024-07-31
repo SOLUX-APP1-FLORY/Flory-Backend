@@ -2,6 +2,7 @@ package flory.FloryServer.domain.mapping;
 
 import flory.FloryServer.domain.Neighbor;
 import flory.FloryServer.domain.User;
+import flory.FloryServer.domain.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Relationship {
+public class Relationship extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
