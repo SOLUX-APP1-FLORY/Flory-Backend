@@ -7,10 +7,10 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-
 
 public class Diary extends BaseEntity {
 
@@ -20,17 +20,10 @@ public class Diary extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private Integer date;
-
-    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
     private String content;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private FlowerMeaning flowerMeaning;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
