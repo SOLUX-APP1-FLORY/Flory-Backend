@@ -1,6 +1,5 @@
 package flory.FloryServer.domain;
 
-import flory.FloryServer.domain.base.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

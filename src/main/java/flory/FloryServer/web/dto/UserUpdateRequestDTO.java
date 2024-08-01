@@ -8,6 +8,7 @@ public class UserUpdateRequestDTO {
     @Getter
     @Setter
     public static class UpdateDTO{
+        private int id;
         private String nickname;
         private Gender gender;
 

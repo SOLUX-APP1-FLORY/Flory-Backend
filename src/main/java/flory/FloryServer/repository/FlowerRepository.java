@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface FlowerRepository extends JpaRepository<Flower, Integer> {
     @Query("SELECT f FROM Flower f WHERE f.id BETWEEN 1 AND 18 AND f.flowerName = :flowerName")
     Optional<Flower> findByFlowerNameInFlowerRange(@Param("flowerName") String flowerName);
+
 }

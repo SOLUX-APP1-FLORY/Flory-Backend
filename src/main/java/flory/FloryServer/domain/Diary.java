@@ -1,7 +1,6 @@
 package flory.FloryServer.domain;
 
 import flory.FloryServer.domain.base.BaseEntity;
-import flory.FloryServer.domain.enums.FlowerMeaning;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +10,6 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-
 public class Diary extends BaseEntity {
 
     @Id
@@ -20,17 +18,10 @@ public class Diary extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String date;
-
-    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
     private String content;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private FlowerMeaning flowerMeaning;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
