@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 
 @Service
@@ -24,41 +26,26 @@ public class FlowerCheckService {
     }
 
     public Optional<FlowerCheckResponseDTO> getSelectedFlower(LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
         // 날짜에 해당하는 다이어리 조회
-        Optional<Diary> diary = diaryRepository.findByCreatedAt(date);
+        // 서비스 클래스에서 입력된 날짜를 LocalDateTime 범위로 변환하고 이를 사용하여 저장소 메소드를 호출
 
-        if (diary.isPresent()) {
-            // 다이어리 엔티티에서 꽃 정보를 가져옴
-            Flower flower = diary.get().getFlower();
+        Optional<Diary> diaryOptional = diaryRepository.findByCreatedAtBetween(startOfDay, endOfDay);
 
-            if (flower != null) {
-                // ChooseResultDTO 인스턴스 생성
-                FlowerCheckResponseDTO.ChooseResultDTO chooseResult =
-                        FlowerCheckResponseDTO.ChooseResultDTO.builder()
-                                .flowerId(flower.getId())
-                                .flowerName(flower.getFlowerName())
-                                .flowerMeaning(flower.getFlowerMeaning())
-                                .flowerUrl(flower.getFlowerUrl())
-                                .build();
+        if (diaryOptional.isPresent()) {
+            Diary diary = diaryOptional.get();
+            Flower flower = diary.getFlower();
+            FlowerCheckResponseDTO.ChooseResultDTO chooseResultDTO = FlowerCheckResponseDTO.ChooseResultDTO.builder()
+                    .flowerId(flower.getId())
+                    .flowerName(flower.getFlowerName())
+                    .flowerMeaning(flower.getFlowerMeaning())
+                    .flowerUrl(flower.getFlowerUrl())
+                    .build();
 
-                // ChooseResultDTO를 포함하는 FlowerCheckResponseDTO 인스턴스 생성
-                FlowerCheckResponseDTO response = new FlowerCheckResponseDTO(chooseResult);
-
-                return Optional.of(response);
-//            // 꽃 정보 조회
-//            Optional<Flower> flower = flowerRepository.findById(flowerId);
-//            if (flower.isPresent()) {
-//                Flower f = flower.get();
-//                return Optional.of(new FlowerCheckResponseDTO(
-//                        f.getId(),
-//                        f.getName(),
-//                        f.getLanguage(),
-//                        f.getImageUrl()
-//                ));
-            }
+            return Optional.of(new FlowerCheckResponseDTO(chooseResultDTO));
+        } else {
+            return Optional.empty();
         }
-
-        // 해당 날짜에 다이어리가 없거나 꽃 정보가 없는 경우 빈 Optional 반환
-        return Optional.empty();
     }
 }
