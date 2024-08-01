@@ -19,9 +19,9 @@ public class RelationshipService {
     @Autowired
     private RelationshipRepository relationshipRepository;
 
-    public void followUser(Long userId, Long targetUserId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        User targetUser = userRepository.findById(targetUserId).orElseThrow(() -> new RuntimeException("Target user not found"));
+    public void followUser(String userNickname, String targetUserNickname) {
+        User user = userRepository.findByNickname(userNickname).orElseThrow(() -> new RuntimeException("User not found"));
+        User targetUser = userRepository.findByNickname(targetUserNickname).orElseThrow(() -> new RuntimeException("Target user not found"));
 
         Optional<Relationship> existingRelationship = relationshipRepository.findByUserAndTargetUser(user, targetUser);
         if (existingRelationship.isPresent()) {
@@ -35,9 +35,9 @@ public class RelationshipService {
         relationshipRepository.save(relationship);
     }
 
-    public void unfollowUser(Long userId, Long targetUserId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        User targetUser = userRepository.findById(targetUserId).orElseThrow(() -> new RuntimeException("Target user not found"));
+    public void unfollowUser(String userNickname, String targetUserNickname) {
+        User user = userRepository.findByNickname(userNickname).orElseThrow(() -> new RuntimeException("User not found"));
+        User targetUser = userRepository.findByNickname(targetUserNickname).orElseThrow(() -> new RuntimeException("Target user not found"));
 
         Relationship relationship = relationshipRepository.findByUserAndTargetUser(user, targetUser)
                 .orElseThrow(() -> new RuntimeException("Follow relationship not found"));
@@ -45,7 +45,8 @@ public class RelationshipService {
         relationshipRepository.delete(relationship);
     }
 
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new RelationException.ResourceNotFoundException("User not found"));
+    public User getUserById(String nickname) {
+        return userRepository.findByNickname(nickname)
+                .orElseThrow(() -> new RelationException.ResourceNotFoundException("User not found: "+ nickname));
     }
 }

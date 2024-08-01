@@ -21,10 +21,10 @@ public class RelationshipController {
     @PostMapping("/follow")
     public ApiResponse<FollowResponseDTO> followUser(@RequestBody FollowRequestDTO request) {
         try {
-            relationshipService.followUser(request.getUserId(), request.getTargetUserId());
-            User user = relationshipService.getUserById(request.getUserId());
-            User targetUser = relationshipService.getUserById(request.getTargetUserId());
-            String resultMessage = String.format("%s와 %s가 친구가 되었습니다~", user.getNickname(), targetUser.getNickname());
+            relationshipService.followUser(request.getUserNickname(), request.getTargetUserNickname());
+            User user = relationshipService.getUserById(request.getUserNickname());
+            User targetUser = relationshipService.getUserById(request.getTargetUserNickname());
+            String resultMessage = String.format("%s(님)이 %s(님)과 친구가 되었습니다~", user.getNickname(), targetUser.getNickname());
             FollowResponseDTO response = new FollowResponseDTO();
             response.setResultMessage(resultMessage);
             return ApiResponse.onSuccess(response);
@@ -38,10 +38,10 @@ public class RelationshipController {
     @PatchMapping("/unfollow")
     public ApiResponse<UnFollowResponseDTO> unfollowUser(@RequestBody UnFollowRequestDTO request) {
         try {
-            relationshipService.unfollowUser(request.getUserId(), request.getTargetUserId());
-            User user = relationshipService.getUserById(request.getUserId());
-            User targetUser = relationshipService.getUserById(request.getTargetUserId());
-            String resultMessage = String.format("%s와 %s의 팔로우가 취소되었습니다.", user.getNickname(), targetUser.getNickname());
+            relationshipService.unfollowUser(request.getUserNickname(), request.getTargetUserNickname());
+            User user = relationshipService.getUserById(request.getUserNickname());
+            User targetUser = relationshipService.getUserById(request.getTargetUserNickname());
+            String resultMessage = String.format("%s(님)이 %s(님)과의 팔로우를 취소헸습니다ㅠ", user.getNickname(), targetUser.getNickname());
             UnFollowResponseDTO response = new UnFollowResponseDTO();
             response.setResultMessage(resultMessage);
             return ApiResponse.onSuccess(response);
