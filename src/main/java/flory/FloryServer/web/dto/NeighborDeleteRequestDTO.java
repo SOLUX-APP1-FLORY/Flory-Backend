@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NeighborDeleteRequestDTO {
-    // private String targetUserToken;
-    private Long targetUserId;
+    private String targetUserToken;
+    // private Long targetUserId;
 }
