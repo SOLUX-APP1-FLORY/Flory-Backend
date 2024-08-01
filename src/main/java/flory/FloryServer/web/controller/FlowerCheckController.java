@@ -4,10 +4,8 @@ import flory.FloryServer.apiPayload.ApiResponse;
 import flory.FloryServer.service.FlowerService.FlowerCheckService;
 import flory.FloryServer.web.dto.FlowerCheckResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -24,7 +22,7 @@ public class FlowerCheckController {
 
     // 날짜를 쿼리 파라미터로 받음
     @GetMapping("/selected")
-    public ApiResponse<FlowerCheckResponseDTO.ChooseResultDTO> getSelectedFlower(@RequestParam("date") String dateString) {
+    public ApiResponse<FlowerCheckResponseDTO.ChooseResultDTO> getSelectedFlower(@RequestParam("date") String dateString, @RequestHeader String token) {
         LocalDate date;
         try {
             date = LocalDate.parse(dateString); // 날짜 문자열을 LocalDate로 변환
