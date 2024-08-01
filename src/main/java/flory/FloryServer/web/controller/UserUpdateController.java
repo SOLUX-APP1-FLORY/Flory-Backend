@@ -17,13 +17,12 @@ public class UserUpdateController {
     private final UserUpdateService userUpdateService;
 
     @PatchMapping("/member")
-    public ApiResponse<UserUpdateResponseDTO.UpdateResultDTO> userUpdate(@RequestHeader String token, @RequestBody @Valid UserUpdateRequestDTO.UpdateDTO requestDTO) {
-        int id = requestDTO.getId();
+    public ApiResponse<UserUpdateResponseDTO> userUpdate(@RequestHeader("Authorization") String token, @RequestBody @Valid UserUpdateRequestDTO.UpdateDTO requestDTO) {
 
         // 사용자 정보 업데이트
-        UserUpdateResponseDTO.UpdateResultDTO resultDTO = userUpdateService.updateUser(id, requestDTO);
+        UserUpdateResponseDTO responseDTO = userUpdateService.updateUser(token, requestDTO);
 
         // 성공 응답 생성
-        return ApiResponse.onSuccess(resultDTO);
+        return ApiResponse.onSuccess(responseDTO);
     }
 }

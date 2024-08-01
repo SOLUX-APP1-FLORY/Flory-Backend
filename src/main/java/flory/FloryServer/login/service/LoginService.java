@@ -10,12 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService {
 
-//    private final UserRepository userRepository;
-//
-//    public LoginService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
-
     public LoginResponseDTO.loginDTO loadToken(String token) throws UsernameNotFoundException {
 
         return LoginResponseDTO.loginDTO.builder()
