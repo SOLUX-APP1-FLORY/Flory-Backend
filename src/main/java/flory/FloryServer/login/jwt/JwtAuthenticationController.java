@@ -25,7 +25,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/v1/auth")
 public class JwtAuthenticationController {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationController.class);
 
