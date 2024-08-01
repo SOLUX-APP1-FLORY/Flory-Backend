@@ -68,6 +68,7 @@ public class DiaryViewService {
                 .flower_name(flower.getFlowerName()) // 꽃 이름
                 .flower_imageUrl(flower.getFlowerUrl()) // 꽃 이미지 URL (가정)
                 .flower_meaning(flower.getFlowerMeaning())// 감정의 꽃말
+                .created_at(diary.getCreatedAt())
                 .build();
     }
 }
