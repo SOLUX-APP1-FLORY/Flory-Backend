@@ -13,16 +13,15 @@ public class FlowerChooseService {
     private FlowerRepository flowerRepository;
 
     @Transactional
-    public FlowerChooseResponseDTO.ChooseResultDTO chooseFlower(String flower_name) {
-            Flower flower = flowerRepository.findByFlowerNameInFlowerRange(flower_name)
-                    .orElseThrow(() -> new RuntimeException(("Flower Not Found")));
+    public FlowerChooseResponseDTO.ChooseResultDTO chooseFlower(String flowerName) {
+        Flower flower = flowerRepository.findByFlowerNameInFlowerRange(flowerName)
+                .orElseThrow(() -> new RuntimeException("Flower Not Found"));
 
-            return FlowerChooseResponseDTO.ChooseResultDTO.builder()
-                    .flowerId(flower.getId())
-                    .flowerName(flower.getFlowerName())
-                    .flowerMeaning(flower.getFlowerMeaning())
-                    .flowerUrl(flower.getFlowerUrl())
-
-                    .build();
+        return FlowerChooseResponseDTO.ChooseResultDTO.builder()
+                .flowerId(flower.getId())
+                .flowerName(flower.getFlowerName())
+                .flowerMeaning(flower.getFlowerMeaning())
+                .flowerUrl(flower.getFlowerUrl())
+                .build();
     }
 }

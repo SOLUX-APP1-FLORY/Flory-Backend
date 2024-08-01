@@ -17,9 +17,9 @@ public class DiaryModifyController {
     @PatchMapping("/diary")
     public ApiResponse<DiaryModifyResponseDTO.ModifyResultDTO> modifyDiary(@RequestHeader("Authorization") String token, @RequestBody @Valid DiaryModifyRequestDTO.ModifyDTO requestDTO) {
 
-        DiaryModifyResponseDTO.ModifyResultDTO resultDTO = diaryModifyService.modifyDiary(token, requestDTO);
+        DiaryModifyResponseDTO responseDTO = diaryModifyService.modifyDiary(token, requestDTO);
 
         // 성공 응답 생성
-        return ApiResponse.onSuccess(resultDTO);}
-
+        return ApiResponse.onSuccess(responseDTO.getResult());
+    }
 }
