@@ -51,7 +51,7 @@ public class LetterCreateService {
         User user = userOptional.get();
 
         // 타겟 사용자 조회
-        Optional<User> targetUserOptional = userRepository.findById(requestDTO.getTarget_id());
+        Optional<User> targetUserOptional = userRepository.findById(requestDTO.getReceiver());
         if (targetUserOptional.isEmpty()) {
             return new LetterCreateResponseDTO.LetterCreateResultDTO("Target user not found");
         }
@@ -75,7 +75,7 @@ public class LetterCreateService {
         Gift gift = Gift.builder()
                 .user(user) // User 객체를 할당
                 .card(card) // 조회한 카드 객체를 할당
-                .target(target_id) // targetUser로 변경
+                .target(target_id) // 선물받을 사람
                 .message(requestDTO.getContent())
                 .flower(flower)
                 .build();
