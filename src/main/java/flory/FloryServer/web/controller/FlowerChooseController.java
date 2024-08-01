@@ -20,9 +20,11 @@ public class FlowerChooseController {
     @PostMapping("/flower")
     public ApiResponse<FlowerChooseResponseDTO.ChooseResultDTO> chooseFlower(@RequestBody @Valid FlowerChooseRequestDTO.ChooseDTO requestDTO) {
 
-        FlowerChooseResponseDTO.ChooseResultDTO resultDTO = flowerChooseService.chooseFlower(requestDTO.getFlowerName());
-
-        // 성공 응답 생성
-        return ApiResponse.onSuccess(resultDTO);
+        try {
+            FlowerChooseResponseDTO.ChooseResultDTO resultDTO = flowerChooseService.chooseFlower(requestDTO.getFlowerName());
+            return ApiResponse.onSuccess(resultDTO);
+        } catch (RuntimeException e) {
+            return ApiResponse.onFailure("FLOWER_NOT_FOUND", e.getMessage(), null);
+        }
     }
 }

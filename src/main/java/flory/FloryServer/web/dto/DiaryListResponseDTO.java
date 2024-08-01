@@ -14,7 +14,7 @@ public class DiaryListResponseDTO {
     private boolean isSuccess;
     private String code;
     private String message;
-    private List<Diary> result; // List<Diary>로 변경
+    private List<Diary> result;
 
     @Getter
     @Builder

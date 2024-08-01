@@ -8,12 +8,21 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserUpdateResponseDTO {
-    @Builder
+    private boolean isSuccess;
+    private String code;
+    private String message;
+    private UpdateResultDTO result;
+
     @Getter
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UpdateResultDTO{
+    public static class UpdateResultDTO {
         private String uid;
         private String nickname;
         private String email;
