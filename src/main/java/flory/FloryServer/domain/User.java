@@ -35,8 +35,8 @@ public class User extends BaseEntity {
     @Column(nullable = false, columnDefinition = "VARCHAR(50)")
     private String email;
 
-    //@Column(nullable = false, length = 20)
-    private String phoneNum;
+//    //@Column(nullable = false, length = 20)
+//    private String phoneNum;
 
     //@Column(nullable = false, length = 20)
     private String nickname;
