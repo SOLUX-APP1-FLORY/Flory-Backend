@@ -15,7 +15,7 @@ public class DiaryModifyRequestDTO {
         private Long diary_id;
         private String title;
         private String content;
-        private String flower_id;
+        private String flower;
     }
 
 }

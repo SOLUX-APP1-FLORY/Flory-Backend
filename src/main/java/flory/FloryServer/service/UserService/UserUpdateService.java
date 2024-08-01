@@ -1,7 +1,6 @@
 package flory.FloryServer.service.UserService;
 
 import flory.FloryServer.domain.User;
-import flory.FloryServer.domain.enums.Gender;
 import flory.FloryServer.repository.UserRepository;
 import flory.FloryServer.web.dto.UserUpdateRequestDTO;
 import flory.FloryServer.web.dto.UserUpdateResponseDTO;
