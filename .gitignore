@@ -38,4 +38,4 @@ out/
 
 # Ignore specific files
 src/main/java/flory/FloryServer/config/FirebaseConfig.java
-src/main/resources/flory-backend-firebase-adminsdk-jwlfw-1d814b9a79.json
+src/main/resources/flory-backend-firebase-adminsdk-jwlfw-b11a82e42e.json
