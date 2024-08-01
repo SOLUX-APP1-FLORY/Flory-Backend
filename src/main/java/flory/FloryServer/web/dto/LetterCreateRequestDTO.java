@@ -13,7 +13,7 @@ public class LetterCreateRequestDTO {
     public static class LetterCreateDTO {
         private String flowerName;
         private Integer card_id;
-        private Integer target_id;
+        private Integer receiver;
         private String content;
     }
 }
