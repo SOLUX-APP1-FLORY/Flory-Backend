@@ -24,7 +24,7 @@ public class Diary extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     /*@ManyToOne(fetch = FetchType.LAZY)
@@ -32,6 +32,7 @@ public class Diary extends BaseEntity {
     private User userNickname;*/
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "flower_id")
+    @JoinColumn(name = "flowerId")
     private Flower flower;
+
 }
