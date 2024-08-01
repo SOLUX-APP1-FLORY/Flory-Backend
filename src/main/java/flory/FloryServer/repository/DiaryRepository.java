@@ -12,7 +12,6 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Optional<Diary> findByUserId(Long userId);
     List<Diary> findByUserUid(String uid);
     List<Diary> findByUserUidAndCreatedAtBetween(String uid, LocalDateTime startDate, LocalDateTime endDate);
-    // 다이어리 ID와 작성 시간으로 다이어리 조회
-    Optional<Diary> findByCreatedAt(LocalDateTime createdAt);
+    // 사용자 ID와 작성 날짜로 다이어리 조회
+    List<Diary> findAllByUserIdAndCreatedAtBetween(Long userId, LocalDateTime startOfDay, LocalDateTime endOfDay);
 }
-
