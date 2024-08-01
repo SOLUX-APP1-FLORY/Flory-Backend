@@ -5,6 +5,6 @@ import lombok.Data;
 public class FollowRequestDTO {
 //    private Long userId;
 //    private Long targetUserId;
-    private String userNickname;
+//    private String userNickname;
     private String targetUserNickname;
 }
