@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,17 +38,16 @@ public class DiaryViewRestController {
             @Parameter(name = "diaryId", description = "조회할 다이어리의 아이디, path variable 입니다!")
     })*/
     public ApiResponse<DiaryViewResponseDTO.DiaryViewDetailDTO> viewDiary(
-            // GET 요청은 일반적으로 @RequestBody를 사용하지 않음.
-            @PathVariable Long id,
-            @RequestParam Long user_id,
-            @RequestParam String date) {
+            @RequestHeader("Authorization") String token, @RequestParam String date) {
 
         // 다이어리 조회 서비스 호출
         DiaryViewRequestDTO.DiaryViewDTO requestDTO = new DiaryViewRequestDTO.DiaryViewDTO();
-        requestDTO.setUser_id(user_id);
+        // requestDTO.setUser_id(user_id);
         requestDTO.setDate(date);
 
-        DiaryViewResponseDTO.DiaryViewDetailDTO resultDTO = diaryViewService.viewDiary(id, requestDTO);
+        DiaryViewResponseDTO.DiaryViewDetailDTO resultDTO = diaryViewService.viewDiary(token, requestDTO);
+
+        // 성공 응답 생성
         return ApiResponse.onSuccess(resultDTO);// 성공적으로 응답
     }
 }

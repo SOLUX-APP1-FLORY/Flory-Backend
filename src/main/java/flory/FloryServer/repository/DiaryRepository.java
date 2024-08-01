@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
     // 다이어리 ID와 작성 시간으로 다이어리 조회
-    Optional<Diary> findByUserIdAndCreatedAt(Long userId, LocalDateTime createdAt);
+    Optional<Diary> findByCreatedAt(LocalDateTime createdAt);
 }
