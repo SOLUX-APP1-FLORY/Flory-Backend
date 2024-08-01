@@ -6,19 +6,29 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserInfoResponseDTO {
-    @Builder
+    private boolean isSuccess;
+    private String code;
+    private String message;
+    private InfoResultDTO result;
+
     @Getter
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class InfoResultDTO{
-        String userId;
-        String nickname;
-        String email;
-        String birthdate;
-        Gender gender;
-        LocalDateTime createdAt;
+    public static class InfoResultDTO {
+        private String userId;
+        private String nickname;
+        private String email;
+        private LocalDate birthdate;
+        private Gender gender;
+        private LocalDateTime createdAt;
     }
 }

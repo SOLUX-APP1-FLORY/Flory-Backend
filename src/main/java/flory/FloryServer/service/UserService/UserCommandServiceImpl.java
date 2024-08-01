@@ -14,12 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserCommandServiceImpl implements UserCommandService {
 
     private final UserRepository userRepository;
+    private final UserConverter userConverter; // UserConverter 주입
 
     @Override
     @Transactional
     public User joinUser(UserRequestDTO.JoinDTO request) {
-
-        User newUser = UserConverter.toUser(request);
+        // UserConverter를 사용하여 DTO를 User로 변환
+        User newUser = userConverter.toUser(request);
 
         return userRepository.save(newUser);
     }

@@ -8,6 +8,6 @@ public class DiaryViewRequestDTO {
     @Setter
     public static class DiaryViewDTO{
         // private Long user_id; // 사용자 ID
-        private String date; // 일기 작성 날짜 (예: "2024-07-31")
+        private String date; // 일기 작성 날짜 (예: "2024-07-31T00:00:00")
     }
 }

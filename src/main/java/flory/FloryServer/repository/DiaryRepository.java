@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +21,10 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     // 특정 사용자가 이번 달에 작성한 일기의 개수를 가져오는 메서드
     @Query("SELECT COUNT(d) FROM Diary d WHERE d.user.id = :userId AND YEAR(d.createdAt) = :year AND MONTH(d.createdAt) = :month")
     int countByUserIdAndMonth(@Param("userId") Long userId, @Param("year") int year, @Param("month") int month);
+
+    Optional<Diary> findByUserId(Long userId);
+    List<Diary> findByUserUid(String uid);
+    List<Diary> findByUserUidAndCreatedAtBetween(String uid, LocalDateTime startDate, LocalDateTime endDate);
+    // 사용자 ID와 작성 날짜로 다이어리 조회
+    List<Diary> findAllByUserIdAndCreatedAtBetween(Long userId, LocalDateTime startOfDay, LocalDateTime endOfDay);
 }
