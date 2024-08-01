@@ -22,12 +22,12 @@ public enum SuccessStatus implements BaseCode {
     private final String code;
     private final String message;
 
-
     @Override
     public ReasonDTO getReason() {
         return ReasonDTO.builder()
                 .message(message)
                 .code(code)
+
                 .isSuccess(true)
                 .build();
     }
@@ -41,4 +41,5 @@ public enum SuccessStatus implements BaseCode {
                 .build()
                 ;
     }
+  
 }

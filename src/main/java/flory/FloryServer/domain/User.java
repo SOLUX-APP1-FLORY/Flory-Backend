@@ -27,7 +27,7 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String uid;
 
-    @Column(nullable = false, columnDefinition = "VARCHAR(50)")
+    @Column(nullable = false, columnDefinition = "VARCHAR(255)")
     private String password;
 
     @Column(nullable = false, columnDefinition = "VARCHAR(50)")
@@ -56,4 +56,8 @@ public class User extends BaseEntity {
     private List<Relationship> RelationshipList = new ArrayList<>();
 
 
+    public void updateProfile(String nickname, Gender gender) {
+        this.nickname = nickname;
+        this.gender = gender;
+    }
 }

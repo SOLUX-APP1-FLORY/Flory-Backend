@@ -16,4 +16,5 @@ public class ReasonDTO {
 
     // 코드 추가 -> ?
     public boolean getIsSuccess(){return isSuccess;}
+
 }
