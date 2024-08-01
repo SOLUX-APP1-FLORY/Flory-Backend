@@ -2,7 +2,6 @@ package flory.FloryServer.service.UserService;
 
 import flory.FloryServer.domain.User;
 import flory.FloryServer.repository.UserRepository;
-import flory.FloryServer.web.dto.UserInfoResponseDTO;
 import flory.FloryServer.web.dto.UserUpdateRequestDTO;
 import flory.FloryServer.web.dto.UserUpdateResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +24,9 @@ public class UserUpdateService {
     private JwtUtil jwtUtil;
 
     @Transactional
-    public UserUpdateResponseDTO updateUser(String token, UserUpdateRequestDTO.UpdateDTO requestDTO) {
-        String jwtToken = token.substring(7);
-        String username = jwtUtil.getUidFromToken(jwtToken);
+    public UserUpdateResponseDTO updateUser(UserUpdateRequestDTO.UpdateDTO requestDTO) {
 
-        if (!jwtUtil.validateToken(jwtToken)) {
-            return UserUpdateResponseDTO.builder()
-                    .isSuccess(false)
-                    .code("INVALID_TOKEN")
-                    .message("Invalid token")
-                    .result(null)
-                    .build();
-        }
-
-        Optional<User> userOptional = userRepository.findByUid(username);
+        Optional<User> userOptional = userRepository.findById(requestDTO.getId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setNickname(requestDTO.getNickname());
