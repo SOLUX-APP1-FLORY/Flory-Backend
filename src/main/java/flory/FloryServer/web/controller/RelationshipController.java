@@ -19,7 +19,7 @@ public class RelationshipController {
     private RelationshipService relationshipService;
 
     @PostMapping("/follow")
-    public ApiResponse<FollowResponseDTO> followUser(@RequestBody FollowRequestDTO request) {
+    public ApiResponse<FollowResponseDTO> followUser(@RequestBody FollowRequestDTO request, @RequestHeader String token) {
         try {
             relationshipService.followUser(request.getUserNickname(), request.getTargetUserNickname());
             User user = relationshipService.getUserById(request.getUserNickname());
@@ -36,7 +36,7 @@ public class RelationshipController {
     }
 
     @PatchMapping("/unfollow")
-    public ApiResponse<UnFollowResponseDTO> unfollowUser(@RequestBody UnFollowRequestDTO request) {
+    public ApiResponse<UnFollowResponseDTO> unfollowUser(@RequestBody UnFollowRequestDTO request, @RequestHeader String token) {
         try {
             relationshipService.unfollowUser(request.getUserNickname(), request.getTargetUserNickname());
             User user = relationshipService.getUserById(request.getUserNickname());
