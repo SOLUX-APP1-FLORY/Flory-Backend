@@ -4,6 +4,10 @@ import flory.FloryServer.apiPayload.ApiResponse;
 import flory.FloryServer.apiPayload.exception.RelationException;
 import flory.FloryServer.domain.User;
 import flory.FloryServer.service.NeighborService.RelationshipService;
+import flory.FloryServer.web.dto.FollowRequestDTO;
+import flory.FloryServer.web.dto.FollowResponseDTO;
+import flory.FloryServer.web.dto.UnFollowRequestDTO;
+import flory.FloryServer.web.dto.UnFollowResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +19,15 @@ public class RelationshipController {
     private RelationshipService relationshipService;
 
     @PostMapping("/follow")
-    public ApiResponse<String> followUser(@RequestParam Long userId, @RequestParam Long targetUserId) {
+    public ApiResponse<FollowResponseDTO> followUser(@RequestBody FollowRequestDTO request) {
         try {
-            relationshipService.followUser(userId, targetUserId);
-            User user = relationshipService.getUserById(userId);
-            User targetUser = relationshipService.getUserById(targetUserId);
+            relationshipService.followUser(request.getUserId(), request.getTargetUserId());
+            User user = relationshipService.getUserById(request.getUserId());
+            User targetUser = relationshipService.getUserById(request.getTargetUserId());
             String resultMessage = String.format("%s와 %s가 친구가 되었습니다~", user.getNickname(), targetUser.getNickname());
-            return ApiResponse.onSuccess(resultMessage);
+            FollowResponseDTO response = new FollowResponseDTO();
+            response.setResultMessage(resultMessage);
+            return ApiResponse.onSuccess(response);
         } catch (RelationException.ResourceNotFoundException e) {
             return ApiResponse.onFailure("common404", e.getMessage(), null);
         } catch (Exception e) {
@@ -30,13 +36,15 @@ public class RelationshipController {
     }
 
     @PatchMapping("/unfollow")
-    public ApiResponse<String> unfollowUser(@RequestParam Long userId, @RequestParam Long targetUserId) {
+    public ApiResponse<UnFollowResponseDTO> unfollowUser(@RequestBody UnFollowRequestDTO request) {
         try {
-            relationshipService.unfollowUser(userId, targetUserId);
-            User user = relationshipService.getUserById(userId);
-            User targetUser = relationshipService.getUserById(targetUserId);
+            relationshipService.unfollowUser(request.getUserId(), request.getTargetUserId());
+            User user = relationshipService.getUserById(request.getUserId());
+            User targetUser = relationshipService.getUserById(request.getTargetUserId());
             String resultMessage = String.format("%s와 %s의 팔로우가 취소되었습니다.", user.getNickname(), targetUser.getNickname());
-            return ApiResponse.onSuccess(resultMessage);
+            UnFollowResponseDTO response = new UnFollowResponseDTO();
+            response.setResultMessage(resultMessage);
+            return ApiResponse.onSuccess(response);
         } catch (RelationException.ResourceNotFoundException e) {
             return ApiResponse.onFailure("common404", e.getMessage(), null);
         } catch (Exception e) {
