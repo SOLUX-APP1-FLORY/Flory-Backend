@@ -17,17 +17,25 @@ public class Relationship extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            @JoinColumn(name = "user_nickname", referencedColumnName = "nickname")
-    })
+//    @JoinColumns({
+//            @JoinColumn(name = "user_id", referencedColumnName = "id"),
+//            @JoinColumn(name = "user_nickname", referencedColumnName = "nickname")
+//    })
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_nickname")
-    private User userNickname;  // ?변수명*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "neighbor_id")
     private Neighbor neighbor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "target_id", nullable = false)
+    private User targetUser;
+
+    @Builder
+    public Relationship(User user, User target) {
+        this.user = user;
+        this.targetUser = target;
+    }
 }

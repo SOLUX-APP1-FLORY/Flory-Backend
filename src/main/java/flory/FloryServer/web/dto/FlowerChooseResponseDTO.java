@@ -5,12 +5,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FlowerChooseResponseDTO {
-    @Builder
+    private boolean isSuccess;
+    private String code;
+    private String message;
+    private ChooseResultDTO result;
+
     @Getter
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ChooseResultDTO{
+    public static class ChooseResultDTO {
         private int flowerId;
         private String flowerName;
         private String flowerMeaning;

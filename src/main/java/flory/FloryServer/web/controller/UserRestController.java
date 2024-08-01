@@ -13,18 +13,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/api/v1")
 public class UserRestController {
 
     private final UserCommandService userCommandService;
+    private final UserConverter userConverter; // UserConverter 주입
 
-    @PostMapping("/")
+    @PostMapping("/signup")
     public ApiResponse<UserResponseDTO.JoinResultDTO> join(@RequestBody @Valid UserRequestDTO.JoinDTO request) {
-        // return null;
-        User user = userCommandService.joinUser((request));
-        return ApiResponse.onSuccess(UserConverter.toJoinResultDTO(user));
+        User user = userCommandService.joinUser(request); // joinUser 메서드 호출
+
+        // UserConverter를 통해 User 객체를 DTO로 변환
+        UserResponseDTO.JoinResultDTO resultDTO = userConverter.toJoinResultDTO(user);
+
+        // ApiResponse를 사용하여 성공 응답 반환
+        return ApiResponse.onSuccess(resultDTO);
     }
 }
