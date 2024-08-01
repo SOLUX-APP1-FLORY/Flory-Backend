@@ -45,12 +45,12 @@ public class DiaryModifyService {
         Diary diary = diaryRepository.findById(requestDTO.getDiary_id())
                 .orElseThrow(() -> new RuntimeException("Diary Not Found"));
 
-        Optional<Flower> flowerOptional = flowerRepository.findById(Integer.parseInt(requestDTO.getFlower_id()));
+        Optional<Flower> flowerOptional = flowerRepository.findByFlowerNameInFlowerRange(requestDTO.getFlower());
         if (flowerOptional.isEmpty()) {
             throw new RuntimeException("Flower not found");
         }
 
-        Flower flower = flowerOptional.get();
+                Flower flower = flowerOptional.get();
 
         diary.setTitle(requestDTO.getTitle());
         diary.setContent(requestDTO.getContent());
