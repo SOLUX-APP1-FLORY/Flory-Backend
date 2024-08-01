@@ -1,5 +1,6 @@
 package flory.FloryServer.service.NeighborService;
 
+import flory.FloryServer.apiPayload.exception.RelationException;
 import flory.FloryServer.domain.User;
 import flory.FloryServer.domain.mapping.Relationship;
 import flory.FloryServer.repository.RelationshipRepository;
@@ -44,4 +45,7 @@ public class RelationshipService {
         relationshipRepository.delete(relationship);
     }
 
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new RelationException.ResourceNotFoundException("User not found"));
+    }
 }
