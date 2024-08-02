@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -54,19 +55,20 @@ public class DiaryViewService {
         }
         User user = userOptional.get();
 
-        LocalDateTime createdAt;
+        LocalDate createdAt;
         try {
-            createdAt = LocalDateTime.parse(requestDTO.getDate(), DateTimeFormatter.ISO_DATE_TIME);
+            createdAt = LocalDate.parse(requestDTO.getDate(), DateTimeFormatter.ISO_DATE);
         } catch (DateTimeParseException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 날짜 형식입니다. 올바른 형식은 yyyy-MM-dd'T'HH:mm:ss입니다.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 날짜 형식입니다. 올바른 형식은 yyyy-MM-dd입니다.");
         }
 
         // 로그 추가
         System.out.println("User ID: " + user.getId());
         System.out.println("Created At: " + createdAt);
 
-        LocalDateTime startOfDay = createdAt.toLocalDate().atStartOfDay();
-        LocalDateTime endOfDay = startOfDay.plusDays(1).minusNanos(1);
+        // LocalDateTime으로 변환
+        LocalDateTime startOfDay = createdAt.atStartOfDay(); // 해당 날짜의 시작 시간
+        LocalDateTime endOfDay = createdAt.plusDays(1).atStartOfDay(); // 다음 날의 시작 시간
 
         // 작성 날짜와 사용자 ID로 다이어리 조회
         List<Diary> diaries = diaryRepository.findAllByUserIdAndCreatedAtBetween(user.getId(), startOfDay, endOfDay);
@@ -80,14 +82,14 @@ public class DiaryViewService {
 
         return DiaryViewResponseDTO.DiaryViewDetailDTO.builder()
                 .diary_id(diary.getId()) // 다이어리 ID
-                .user_id(user.getId())// 사용자 ID
+                .user_id(user.getId()) // 사용자 ID
                 .title(diary.getTitle()) // 일기 제목
                 .content(diary.getContent()) // 일기 내용
                 .flower_id(flower.getId()) // 꽃 ID
                 .flower_name(flower.getFlowerName()) // 꽃 이름
                 .flower_imageUrl(flower.getFlowerUrl()) // 꽃 이미지 URL (가정)
-                .flower_meaning(flower.getFlowerMeaning())// 감정의 꽃말
-                .created_at(diary.getCreatedAt())
+                .flower_meaning(flower.getFlowerMeaning()) // 감정의 꽃말
+                .created_at(diary.getCreatedAt().toLocalDate())
                 .build();
     }
 }
