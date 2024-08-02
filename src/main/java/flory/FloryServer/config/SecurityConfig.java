@@ -29,6 +29,8 @@ public class SecurityConfig {
 
     private static final String[] ALLOWED_URIS = {
             "/error",
+            "/temp/test",
+            "/temp/exception",
             "/auth/login",// Example URI
             "/api/v1/signup",
             "/api/v1/auth/login",
