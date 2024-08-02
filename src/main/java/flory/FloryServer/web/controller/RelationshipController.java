@@ -67,20 +67,20 @@ public class RelationshipController {
 //            return ApiResponse.onFailure("common500", "서버 오류", null);
 //        }
 //    }
-@GetMapping("")
-@Operation(summary = "이웃 목록 조회 API", description = "현재 사용자의 이웃 목록을 조회합니다.")
-@ApiResponses({
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "인증 실패", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없습니다.", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
-        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "서버 오류", content = @Content(schema = @Schema(implementation = ApiResponse.class)))
-})
-public ApiResponse<List<String>> getNeighbors(@RequestHeader("Authorization") String token) {
-    try {
-        List<String> neighbors = relationshipService.getNeighborsByToken(token);
-        return ApiResponse.onSuccess(neighbors);
-    } catch (RuntimeException e) {
-        return ApiResponse.onFailure("common500", e.getMessage(), null);
+    @GetMapping("")
+    @Operation(summary = "이웃 목록 조회 API", description = "현재 사용자의 이웃 목록을 조회합니다.")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "인증 실패", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없습니다.", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "서버 오류", content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
+    public ApiResponse<List<String>> getNeighbors(@RequestHeader("Authorization") String token) {
+        try {
+            List<String> neighbors = relationshipService.getNeighborsByToken(token);
+            return ApiResponse.onSuccess(neighbors);
+        } catch (RuntimeException e) {
+            return ApiResponse.onFailure("common500", e.getMessage(), null);
+        }
     }
-}
 }
