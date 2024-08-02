@@ -21,12 +21,10 @@ public class LetterViewRestController {
     @GetMapping("/{giftId}/letter")
     public ApiResponse<LetterViewResponseDTO.LetterViewDetailDTO> viewLetter(
             @RequestHeader("Authorization") String token,
-            @RequestParam String date,
-            @PathVariable("giftId") Long sender_id) {
+            @PathVariable("giftId") Long giftId) {
 
         LetterViewRequestDTO.LetterViewDTO requestDTO = new LetterViewRequestDTO.LetterViewDTO();
-        requestDTO.setDate(date);
-        requestDTO.setSender(sender_id);
+        requestDTO.setGiftId(giftId);
 
         LetterViewResponseDTO.LetterViewDetailDTO resultDTO = letterViewService.viewLetter(token, requestDTO);
 

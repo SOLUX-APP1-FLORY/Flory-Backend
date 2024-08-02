@@ -1,8 +1,10 @@
 package flory.FloryServer.service.GiftService;
 
+import flory.FloryServer.domain.Flower;
 import flory.FloryServer.domain.Gift;
 import flory.FloryServer.domain.User;
 import flory.FloryServer.login.jwt.JwtUtil;
+import flory.FloryServer.repository.FlowerRepository;
 import flory.FloryServer.repository.GiftRepository;
 import flory.FloryServer.repository.UserRepository;
 import flory.FloryServer.web.dto.BouquetInfoResponseDTO;
@@ -21,6 +23,9 @@ public class BouquetInfoService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FlowerRepository flowerRepository;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -56,9 +61,10 @@ public class BouquetInfoService {
         // GiftResponseDTO로 변환
         List<BouquetInfoResponseDTO.Gift> dtoGifts = gifts.stream()
                 .map(gift -> BouquetInfoResponseDTO.Gift.builder()
-                        .id(gift.getId())
+                        .giftId(gift.getId())
                         .sender(gift.getUser().getNickname()) // 선물 보낸 사용자 닉네임
                         .bouquetId(gift.getFlower().getId())
+                        .bouquetUrl(gift.getFlower().getFlowerUrl()) // bouquetUrl에 flowerUrl 설정
                         .build())
                 .collect(Collectors.toList());
 

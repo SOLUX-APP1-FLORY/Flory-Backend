@@ -18,8 +18,9 @@ public class BouquetInfoResponseDTO {
     @Getter
     @Builder
     public static class Gift {
-        private Long id;
+        private long giftId;
         private String sender;
         private int bouquetId;
+        private String bouquetUrl;
     }
 }
