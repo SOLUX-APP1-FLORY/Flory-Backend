@@ -8,7 +8,6 @@ public class LetterViewRequestDTO {
     @Setter
     public static class LetterViewDTO {
         private String bouquet_name;
-        private Long sender; //선물 준 사람
-        private String date; // 날짜
+        private Long giftId; //선물 준 사람
     }
 }
