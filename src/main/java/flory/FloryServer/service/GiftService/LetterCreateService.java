@@ -1,5 +1,6 @@
 package flory.FloryServer.service.GiftService;
 
+import flory.FloryServer.apiPayload.ApiResponse;
 import flory.FloryServer.domain.Card;
 import flory.FloryServer.domain.Flower;
 import flory.FloryServer.domain.Gift;
@@ -36,31 +37,31 @@ public class LetterCreateService {
     private JwtUtil jwtUtil;
 
     @Transactional
-    public LetterCreateResponseDTO.LetterCreateResultDTO createletter(String token, LetterCreateRequestDTO.LetterCreateDTO requestDTO) {
+    public ApiResponse<LetterCreateResponseDTO.CreateResultDTO> createletter(String token, LetterCreateRequestDTO.LetterCreateDTO requestDTO) {
         String jwtToken = token.substring(7); // 토큰에서 "Bearer " 부분 제거
         String username = jwtUtil.getUidFromToken(jwtToken);
 
         if (!jwtUtil.validateToken(jwtToken)) {
-            return new LetterCreateResponseDTO.LetterCreateResultDTO("Invalid token");
+            return ApiResponse.onFailure("INVALID_TOKEN", "Invalid token", null);
         }
 
         Optional<User> userOptional = userRepository.findByUid(username);
         if (userOptional.isEmpty()) {
-            return new LetterCreateResponseDTO.LetterCreateResultDTO("User not found");
+            return ApiResponse.onFailure("USER_NOT_FOUND", "User not found", null);
         }
         User user = userOptional.get();
 
         // 타겟 사용자 조회
         Optional<User> targetUserOptional = userRepository.findByNickname(requestDTO.getReceiverNickname());
         if (targetUserOptional.isEmpty()) {
-            return new LetterCreateResponseDTO.LetterCreateResultDTO("Target user not found");
+            return ApiResponse.onFailure("TARGET_USER_NOT_FOUND", "Target user not found", null);
         }
         User targetNickname = targetUserOptional.get();
 
         // 꽃 조회
         Optional<Flower> flowerOptional = flowerRepository.findByFlowerNameInFlowerRange(requestDTO.getFlowerName());
         if (flowerOptional.isEmpty()) {
-            return new LetterCreateResponseDTO.LetterCreateResultDTO("Flower not found");
+            return ApiResponse.onFailure("FLOWER_NOT_FOUND", "Flower not found", null);
         }
         Flower flower = flowerOptional.get();
 
@@ -82,6 +83,8 @@ public class LetterCreateService {
 
         giftRepository.save(gift);
 
-        return new LetterCreateResponseDTO.LetterCreateResultDTO("편지를 성공적으로 작성했습니다.");
+        // return new LetterCreateResponseDTO.CreateResultDTO("편지를 성공적으로 작성했습니다.");
+        LetterCreateResponseDTO.CreateResultDTO result = new LetterCreateResponseDTO.CreateResultDTO("편지를 성공적으로 작성했습니다.");
+        return ApiResponse.onSuccess(result);
     }
 }
