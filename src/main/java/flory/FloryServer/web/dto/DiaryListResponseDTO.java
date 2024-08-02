@@ -14,11 +14,11 @@ public class DiaryListResponseDTO {
     private boolean isSuccess;
     private String code;
     private String message;
-    private List<Diary> result;
+    private DiaryResultDTO result;
 
     @Getter
     @Builder
-    public static class Diary {
+    public static class DiaryResultDTO {
         private String flowerUrl;
         private LocalDateTime createdAt;
     }
