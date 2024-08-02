@@ -28,10 +28,10 @@ public class RelationshipService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public void addNeighbor(String userToken, String targetUserToken) { // , Long targetUserId
+    public void addNeighbor(String userToken, String targetUserNickname) { // , Long targetUserId
         User user = getUserFromToken(userToken);
-        User targetUser = getUserFromToken(userToken); // userRepository.findById(targetUserToken)
-                //.orElseThrow(() -> new RuntimeException("Target user not found"));
+        User targetUser = userRepository.findByNickname(targetUserNickname)
+                .orElseThrow(() -> new RuntimeException("Target user not found"));
 
         Relationship relationship = Relationship.builder()
                 .user(user)
@@ -41,10 +41,10 @@ public class RelationshipService {
         relationshipRepository.save(relationship);
     }
 
-    public void deleteNeighbor(String userToken, String targetUserToken) {
+    public void deleteNeighbor(String userToken, String targetUserNickname) {
         User user = getUserFromToken(userToken);
-        User targetUser = getUserFromToken(userToken); // userRepository.findById(targetUserId)
-                //.orElseThrow(() -> new RuntimeException("Target user not found"));
+        User targetUser = userRepository.findByNickname(targetUserNickname)
+                .orElseThrow(() -> new RuntimeException("Target user not found"));
 
         Relationship relationship = relationshipRepository.findByUserAndTargetUser(user, targetUser)
                 .orElseThrow(() -> new RuntimeException("Relationship not found"));

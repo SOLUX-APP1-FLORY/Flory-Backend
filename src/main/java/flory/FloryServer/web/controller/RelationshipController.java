@@ -30,7 +30,7 @@ public class RelationshipController {
     @Operation(summary = "이웃 추가 API", description = "현재 사용자의 이웃을 추가합니다.")
     public ApiResponse<String> addNeighbor(@RequestHeader("Authorization") String userToken, @RequestBody NeighborAddRequestDTO addRequestDTO) {
         try {
-            relationshipService.addNeighbor(userToken, addRequestDTO.getTargetUserToken());
+            relationshipService.addNeighbor(userToken, addRequestDTO.getTargetUserNickname());
             return ApiResponse.onSuccess("이웃 추가에 성공했습니다.");
         } catch (RuntimeException e) {
             return ApiResponse.onFailure("common500", e.getMessage(), null);
@@ -41,7 +41,7 @@ public class RelationshipController {
     @Operation(summary = "이웃 삭제 API", description = "현재 사용자의 이웃을 삭제합니다.")
     public ApiResponse<String> deleteNeighbor(@RequestHeader("Authorization") String userToken, @RequestBody NeighborDeleteRequestDTO deleteRequestDTO) {
         try {
-            relationshipService.deleteNeighbor(userToken, deleteRequestDTO.getTargetUserToken());
+            relationshipService.deleteNeighbor(userToken, deleteRequestDTO.getTargetUserNickname());
             return ApiResponse.onSuccess("이웃 삭제에 성공했습니다.");
         } catch (RuntimeException e) {
             return ApiResponse.onFailure("common500", e.getMessage(), null);
