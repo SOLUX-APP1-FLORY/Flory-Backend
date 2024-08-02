@@ -13,8 +13,6 @@ import flory.FloryServer.login.jwt.JwtUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 public class DiaryModifyService {
     @Autowired
@@ -30,28 +28,22 @@ public class DiaryModifyService {
     private JwtUtil jwtUtil;
 
     @Transactional
-    public DiaryModifyResponseDTO modifyDiary(String token, DiaryModifyRequestDTO.ModifyDTO requestDTO) {
-        String jwtToken = token.substring(7); // 토큰에서 "Bearer " 부분 제거
+    public DiaryModifyResponseDTO.DiaryModifyResultDTO modifyDiary(String token, DiaryModifyRequestDTO.DiaryModifyDTO requestDTO) {
+        String jwtToken = token.substring(7); // Remove "Bearer " part from the token
         String username = jwtUtil.getUidFromToken(jwtToken);
 
         if (!jwtUtil.validateToken(jwtToken)) {
             throw new RuntimeException("Invalid token");
         }
 
-        Optional<User> userOptional = userRepository.findByUid(username);
-        if (userOptional.isEmpty()) {
-            throw new RuntimeException("User not found");
-        }
+        User user = userRepository.findByUid(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         Diary diary = diaryRepository.findById(requestDTO.getDiary_id())
-                .orElseThrow(() -> new RuntimeException("Diary Not Found"));
+                .orElseThrow(() -> new RuntimeException("Diary not found"));
 
-        Optional<Flower> flowerOptional = flowerRepository.findByFlowerNameInFlowerRange(requestDTO.getFlower());
-        if (flowerOptional.isEmpty()) {
-            throw new RuntimeException("Flower not found");
-        }
-
-        Flower flower = flowerOptional.get();
+        Flower flower = flowerRepository.findByFlowerNameInFlowerRange(requestDTO.getFlower())
+                .orElseThrow(() -> new RuntimeException("Flower not found"));
 
         diary.setTitle(requestDTO.getTitle());
         diary.setContent(requestDTO.getContent());
@@ -59,7 +51,7 @@ public class DiaryModifyService {
 
         Diary updatedDiary = diaryRepository.save(diary);
 
-        DiaryModifyResponseDTO.ModifyResultDTO modifyResult = DiaryModifyResponseDTO.ModifyResultDTO.builder()
+        return DiaryModifyResponseDTO.DiaryModifyResultDTO.builder()
                 .diary_id(updatedDiary.getId())
                 .flower_id(flower.getId())
                 .flower(flower.getFlowerName())
@@ -69,12 +61,6 @@ public class DiaryModifyService {
                 .createdAt(updatedDiary.getCreatedAt())
                 .updatedAt(updatedDiary.getUpdatedAt())
                 .build();
-
-        return DiaryModifyResponseDTO.builder()
-                .isSuccess(true)
-                .code("COMMON200")
-                .message("성공입니다.")
-                .result(modifyResult)
-                .build();
     }
+
 }

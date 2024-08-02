@@ -15,11 +15,14 @@ public class DiaryModifyController {
     private final DiaryModifyService diaryModifyService;
 
     @PatchMapping("/diary")
-    public ApiResponse<DiaryModifyResponseDTO.ModifyResultDTO> modifyDiary(@RequestHeader("Authorization") String token, @RequestBody @Valid DiaryModifyRequestDTO.ModifyDTO requestDTO) {
+    public ApiResponse<DiaryModifyResponseDTO.DiaryModifyResultDTO> modifyDiary(
+            @RequestHeader("Authorization") String token,
+            @RequestBody @Valid DiaryModifyRequestDTO.DiaryModifyDTO requestDTO) {
 
-        DiaryModifyResponseDTO responseDTO = diaryModifyService.modifyDiary(token, requestDTO);
+        // 일기 수정 요청 처리 및 결과 반환
+        DiaryModifyResponseDTO.DiaryModifyResultDTO resultDTO = diaryModifyService.modifyDiary(token, requestDTO);
 
-        // 성공 응답 생성
-        return ApiResponse.onSuccess(responseDTO.getResult());
+        // 성공 응답 생성 및 반환
+        return ApiResponse.onSuccess(resultDTO);
     }
 }
