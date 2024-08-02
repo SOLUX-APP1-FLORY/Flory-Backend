@@ -13,10 +13,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
 
     private final JwtRequestFilter jwtRequestFilter;
     private final UserDetailsService userDetailsService;
@@ -29,21 +31,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // CSRF 보호 비활성화
                 .csrf(csrf -> csrf
                         .disable()
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers("/auth/login").permitAll()  // 로그인 및 회원가입 엔드포인트를 허용
+                        .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/api/v1/member").permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()  // 인증된 요청만 허용
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Stateless 설정
-                );
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .cors();  // CORS 설정 추가
 
-        // JWT 필터 추가
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -57,5 +58,15 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry
+                .addMapping("/**")
+                .allowedOrigins("http://localhost:3000")  // 클라이언트의 출처를 허용
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // 허용할 HTTP 메서드
+                .allowedHeaders("*")  // 허용할 헤더
+                .allowCredentials(true);  // 자격 증명 허용
     }
 }

@@ -34,19 +34,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String uid = null;
         String jwtToken = null;
 
-        // JWT 토큰은 "Bearer "로 시작
-        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
-            jwtToken = requestTokenHeader.substring(7);
-            try {
-                uid = jwtUtil.getUidFromToken(jwtToken);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Unable to get JWT Token");
-            } catch (ExpiredJwtException e) {
-                System.out.println("JWT Token has expired");
-            }
-        } else {
-            logger.warn("JWT Token does not begin with Bearer String");
-        }
+//        // JWT 토큰은 "Bearer "로 시작
+//        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+//            jwtToken = requestTokenHeader.substring(7);
+//            try {
+//                uid = jwtUtil.getUidFromToken(jwtToken);
+//            } catch (IllegalArgumentException e) {
+//                System.out.println("Unable to get JWT Token");
+//            } catch (ExpiredJwtException e) {
+//                System.out.println("JWT Token has expired");
+//            }
+//        } else {
+//            logger.warn("JWT Token does not begin with Bearer String");
+//        }
 
         // 토큰을 받으면 검증
         if (uid != null && SecurityContextHolder.getContext().getAuthentication() == null) {
