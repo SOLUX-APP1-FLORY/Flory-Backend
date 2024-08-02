@@ -27,7 +27,7 @@ public class DiaryViewRestController {
         this.diaryViewService = diaryViewService;
     }
 
-    @GetMapping("/diaries/{id}")
+    @GetMapping("/diaries")
     @Operation(summary = "사용자가 작성한 다이어리 조회 API", description = "특정 사용자가 작성한 다이어리의 상세 정보를 조회하는 API입니다.")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공"),
