@@ -50,9 +50,8 @@ public class SecurityConfig {
                 )
                 .cors(withDefaults()) // CORS 설정 추가
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(ALLOWED_URIS).permitAll()  // 이 경로도 허용
-                        .anyRequest()
-                        .authenticated()
+                        .requestMatchers(ALLOWED_URIS).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Stateless 설정
@@ -77,7 +76,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://3.37.34.30:8080");
+        configuration.addAllowedOrigin("http://3.37.34.30");
         configuration.addAllowedOrigin("http://localhost:8080");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
@@ -87,5 +86,6 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }
 
