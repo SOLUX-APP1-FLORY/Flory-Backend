@@ -43,25 +43,24 @@ public class DiaryListService {
         // 해당 날짜 범위 내의 일기 조회
         List<Diary> diaries = diaryRepository.findByUserUidAndCreatedAtBetween(username, startDate, endDate);
 
+        Diary firstDiary = diaries.isEmpty() ? null : diaries.get(0);
+
         // DTO로 변환
-        List<DiaryListResponseDTO.Diary> dtoDiaries = diaries.isEmpty()
-                ? Collections.singletonList(
-                DiaryListResponseDTO.Diary.builder()
+        DiaryListResponseDTO.DiaryResultDTO dtoDiary = firstDiary == null
+                ? DiaryListResponseDTO.DiaryResultDTO.builder()
                         .flowerUrl(null)
                         .createdAt(null)
-                        .build())
-                : diaries.stream()
-                .map(diary -> DiaryListResponseDTO.Diary.builder()
-                        .flowerUrl(diary.getFlower() != null ? diary.getFlower().getFlowerUrl() : null)
-                        .createdAt(diary.getCreatedAt())
-                        .build())
-                .collect(Collectors.toList());
+                        .build()
+                : DiaryListResponseDTO.DiaryResultDTO.builder()
+                .flowerUrl(firstDiary.getFlower() != null ? firstDiary.getFlower().getFlowerUrl():null)
+                .createdAt(firstDiary.getCreatedAt())
+                .build();
 
         return DiaryListResponseDTO.builder()
                 .isSuccess(true)
                 .code("COMMON200")
                 .message("성공입니다.")
-                .result(dtoDiaries)
+                .result(dtoDiary)
                 .build();
     }
 }

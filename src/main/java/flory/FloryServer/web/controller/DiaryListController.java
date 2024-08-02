@@ -19,7 +19,7 @@ public class DiaryListController {
     private final DiaryListService diaryListService;
 
     @GetMapping("/main/diaries")
-    public ApiResponse<List<DiaryListResponseDTO.Diary>> getDiaries(@RequestHeader("Authorization") String token,
+    public ApiResponse<DiaryListResponseDTO.DiaryResultDTO> getDiaries(@RequestHeader("Authorization") String token,
                                                                     @RequestParam int year,
                                                                     @RequestParam int month,
                                                                     @RequestParam int day) {
