@@ -32,7 +32,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)  // CSRF 보호 비활성화
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/", "/api/v1/signup", "/api/v1/auth/login","/api/**").authenticated()  // 인증된 사용자만 접근 가능
+                        .requestMatchers("/", "/api/v1/signup", "/api/v1/auth/login","/api/**").permitAll()  // 인증된 사용자만 접근 가능
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()  // Swagger 관련 경로는 모든 사용자 허용
                         .requestMatchers("/auth/login", "/api/v1/member").permitAll()  // 로그인과 회원가입 경로는 모든 사용자 허용
                         .anyRequest().permitAll()  // 나머지 모든 경로는 허용
