@@ -28,7 +28,8 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
 
     private static final String[] ALLOWED_URIS = {
-            "/error",  // Example URI
+            "/error",
+            "/auth/login",// Example URI
             "/api/v1/signup",
             "/api/v1/auth/login",
             "/swagger-ui/**",
