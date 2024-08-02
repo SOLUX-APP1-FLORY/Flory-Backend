@@ -13,22 +13,22 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfoResponseDTO {
+public class UserModifyResponseDTO {
     private boolean isSuccess;
     private String code;
     private String message;
-    private InfoResultDTO result;
+    private UserModifyResponseDTO.ModifyResultDTO result;
 
     @Getter
     @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class InfoResultDTO {
-        private String userId;
+    public static class ModifyResultDTO {
+        private String uid;
         private String nickname;
         private String email;
-        private LocalDate birthdate;
         private Gender gender;
+        private LocalDate birthdate;
         private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
     }
+
 }

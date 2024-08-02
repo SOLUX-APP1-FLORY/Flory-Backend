@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Optional;
 
 import flory.FloryServer.login.jwt.JwtUtil;
@@ -39,13 +41,6 @@ public class DiaryViewService {
 
     @Transactional
     public DiaryViewResponseDTO.DiaryViewDetailDTO viewDiary(String token, DiaryViewRequestDTO.DiaryViewDTO requestDTO) {
-        /*// 입력값 검증
-        if (requestDTO.getUser_id() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "사용자 ID는 필수입니다.");
-        }
-        if (requestDTO.getDate() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "날짜는 필수입니다.");
-        }*/
 
         String jwtToken = token.substring(7); // 토큰에서 "Bearer " 부분 제거
         String username = jwtUtil.getUidFromToken(jwtToken);
@@ -58,30 +53,32 @@ public class DiaryViewService {
         if (userOptional.isEmpty()) {
             throw new RuntimeException("User not found");
         }
+        User user = userOptional.get();
 
-        LocalDateTime createdAt;
-
+        LocalDate createdAt;
         try {
-            createdAt = LocalDateTime.parse(requestDTO.getDate(), DateTimeFormatter.ISO_DATE_TIME);
+            createdAt = LocalDate.parse(requestDTO.getDate(), DateTimeFormatter.ISO_DATE);
         } catch (DateTimeParseException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 날짜 형식입니다. 올바른 형식은 yyyy-MM-dd'T'HH:mm:ss입니다.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 날짜 형식입니다. 올바른 형식은 yyyy-MM-dd입니다.");
         }
 
-        // 디버깅 로그 출력
-        // System.out.println("Requested User ID: " + requestDTO.getUser_id());
-        System.out.println("Requested Date: " + createdAt);
+        // 로그 추가
+        System.out.println("User ID: " + user.getId());
+        System.out.println("Created At: " + createdAt);
+
+        // LocalDateTime으로 변환
+        LocalDateTime startOfDay = createdAt.atStartOfDay(); // 해당 날짜의 시작 시간
+        LocalDateTime endOfDay = createdAt.plusDays(1).atStartOfDay(); // 다음 날의 시작 시간
 
         // 작성 날짜와 사용자 ID로 다이어리 조회
-        Diary diary = diaryRepository.findByCreatedAt(createdAt)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 날짜에 작성된 다이어리를 찾을 수 없습니다."));
-
-        /*// 작성 날짜와 사용자 ID로 다이어리 조회
-        Diary diary = diaryRepository.findByUserIdAndCreatedAt(username, createdAt)
-                .orElseThrow(() -> new ResourceNotFoundException("해당 날짜에 작성된 다이어리를 찾을 수 없습니다."));*/
+        List<Diary> diaries = diaryRepository.findAllByUserIdAndCreatedAtBetween(user.getId(), startOfDay, endOfDay);
+        if (diaries.isEmpty()) {
+            throw new ResourceNotFoundException("해당 날짜에 작성된 다이어리를 찾을 수 없습니다.");
+        }
+        Diary diary = diaries.get(0);
 
         // 관련된 꽃 정보 조회
         Flower flower = diary.getFlower(); // 다이어리에서 꽃 정보 가져오기
-        User user = diary.getUser();
 
         return DiaryViewResponseDTO.DiaryViewDetailDTO.builder()
                 .diary_id(diary.getId()) // 다이어리 ID
@@ -91,8 +88,8 @@ public class DiaryViewService {
                 .flower_id(flower.getId()) // 꽃 ID
                 .flower_name(flower.getFlowerName()) // 꽃 이름
                 .flower_imageUrl(flower.getFlowerUrl()) // 꽃 이미지 URL (가정)
-                .flower_meaning(flower.getFlowerMeaning())// 감정의 꽃말
-                .created_at(diary.getCreatedAt())
+                .flower_meaning(flower.getFlowerMeaning()) // 감정의 꽃말
+                .created_at(diary.getCreatedAt().toLocalDate())
                 .build();
     }
 }

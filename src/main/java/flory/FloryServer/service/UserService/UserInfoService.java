@@ -15,11 +15,16 @@ public class UserInfoService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
-    public UserInfoResponseDTO.InfoResultDTO InfoUser(String token) {
+    public UserInfoResponseDTO infoUser(String token) {
         String jwtToken = token.substring(7); // 토큰에서 "Bearer " 부분 제거
 
         if (!jwtUtil.validateToken(jwtToken)) {
-            throw new RuntimeException("Invalid token");
+            return UserInfoResponseDTO.builder()
+                    .isSuccess(false)
+                    .code("INVALID_TOKEN")
+                    .message("Invalid token")
+                    .result(null)
+                    .build();
         }
 
         String userId = jwtUtil.getUidFromToken(jwtToken);
@@ -28,15 +33,28 @@ public class UserInfoService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            return UserInfoResponseDTO.InfoResultDTO.builder()
+            UserInfoResponseDTO.InfoResultDTO result = UserInfoResponseDTO.InfoResultDTO.builder()
                     .userId(user.getUid())
                     .nickname(user.getNickname())
+                    .birthdate(user.getBirthdate())
                     .email(user.getEmail())
                     .gender(user.getGender())
                     .createdAt(user.getCreatedAt())
                     .build();
+
+            return UserInfoResponseDTO.builder()
+                    .isSuccess(true)
+                    .code("USER_FOUND")
+                    .message("User found")
+                    .result(result)
+                    .build();
         } else {
-            throw new RuntimeException("User not found");
+            return UserInfoResponseDTO.builder()
+                    .isSuccess(false)
+                    .code("USER_NOT_FOUND")
+                    .message("User not found")
+                    .result(null)
+                    .build();
         }
     }
 }
