@@ -8,15 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserUpdateResponseDTO {
-    private boolean isSuccess;
-    private String code;
-    private String message;
-    private UpdateResultDTO result;
 
     @Getter
     @Builder
