@@ -59,7 +59,7 @@ public class LetterCreateService {
         User targetNickname = targetUserOptional.get();
 
         // 꽃 조회
-        Optional<Flower> flowerOptional = flowerRepository.findByFlowerNameInFlowerRange(requestDTO.getFlowerName());
+        Optional<Flower> flowerOptional = flowerRepository.findByBouquetNameInFlowerRange(requestDTO.getFlowerName());
         if (flowerOptional.isEmpty()) {
             return ApiResponse.onFailure("FLOWER_NOT_FOUND", "Flower not found", null);
         }
