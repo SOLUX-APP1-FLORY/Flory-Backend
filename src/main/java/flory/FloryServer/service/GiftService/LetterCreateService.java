@@ -29,8 +29,8 @@ public class LetterCreateService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private CardRepository cardRepository; // CardRepository 주입
+//    @Autowired
+//    private CardRepository cardRepository; // CardRepository 주입
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -51,11 +51,11 @@ public class LetterCreateService {
         User user = userOptional.get();
 
         // 타겟 사용자 조회
-        Optional<User> targetUserOptional = userRepository.findById(requestDTO.getReceiver());
+        Optional<User> targetUserOptional = userRepository.findByNickname(requestDTO.getReceiverNickname());
         if (targetUserOptional.isEmpty()) {
             return new LetterCreateResponseDTO.LetterCreateResultDTO("Target user not found");
         }
-        User target_id = targetUserOptional.get();
+        User targetNickname = targetUserOptional.get();
 
         // 꽃 조회
         Optional<Flower> flowerOptional = flowerRepository.findByFlowerNameInFlowerRange(requestDTO.getFlowerName());
@@ -65,17 +65,17 @@ public class LetterCreateService {
         Flower flower = flowerOptional.get();
 
         // 카드 조회 (requestDTO에서 카드 ID 사용)
-        Optional<Card> cardOptional = cardRepository.findById(requestDTO.getCard_id());// CardRepository 사용
-        if (cardOptional.isEmpty()) {
-            return new LetterCreateResponseDTO.LetterCreateResultDTO("Card not found");
-        }
-        Card card = cardOptional.get();
+//        Optional<Card> cardOptional = cardRepository.findById(requestDTO.getCard_id());// CardRepository 사용
+//        if (cardOptional.isEmpty()) {
+//            return new LetterCreateResponseDTO.LetterCreateResultDTO("Card not found");
+//        }
+//        Card card = cardOptional.get();
 
         // Gift 객체 생성 및 저장
         Gift gift = Gift.builder()
                 .user(user) // User 객체를 할당
-                .card(card) // 조회한 카드 객체를 할당
-                .target(target_id) // 선물받을 사람
+                //.card(card) // 조회한 카드 객체를 할당
+                .target(targetNickname) // 선물받을 사람
                 .message(requestDTO.getContent())
                 .flower(flower)
                 .build();

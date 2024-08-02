@@ -12,8 +12,8 @@ public class LetterCreateRequestDTO {
     @AllArgsConstructor
     public static class LetterCreateDTO {
         private String flowerName;
-        private Integer card_id;
-        private Integer receiver;
+//        private Integer card_id;
+        private String receiverNickname;
         private String content;
     }
 }
