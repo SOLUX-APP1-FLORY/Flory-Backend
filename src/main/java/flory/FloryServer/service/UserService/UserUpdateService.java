@@ -24,9 +24,9 @@ public class UserUpdateService {
     private JwtUtil jwtUtil;
 
     @Transactional
-    public UserUpdateResponseDTO updateUser(UserUpdateRequestDTO.UpdateDTO requestDTO) {
-
+    public UserUpdateResponseDTO.UpdateResultDTO updateUser(UserUpdateRequestDTO.UpdateDTO requestDTO) {
         Optional<User> userOptional = userRepository.findById(requestDTO.getId());
+
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setNickname(requestDTO.getNickname());
@@ -34,7 +34,7 @@ public class UserUpdateService {
 
             userRepository.save(user);
 
-            UserUpdateResponseDTO.UpdateResultDTO result = UserUpdateResponseDTO.UpdateResultDTO.builder()
+            return UserUpdateResponseDTO.UpdateResultDTO.builder()
                     .uid(user.getUid())
                     .nickname(user.getNickname())
                     .email(user.getEmail())
@@ -42,20 +42,9 @@ public class UserUpdateService {
                     .createdAt(user.getCreatedAt())
                     .updatedAt(user.getUpdatedAt())
                     .build();
-
-            return UserUpdateResponseDTO.builder()
-                    .isSuccess(true)
-                    .code("COMMON200")
-                    .message("User updated successfully")
-                    .result(result)
-                    .build();
         } else {
-            return UserUpdateResponseDTO.builder()
-                    .isSuccess(false)
-                    .code("USER404")
-                    .message("User not found")
-                    .result(null)
-                    .build();
+            // Handle the case where the user is not found
+            throw new RuntimeException("User not found");
         }
     }
 }
