@@ -6,11 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class LetterCreateResponseDTO {
-    @Builder
+    private boolean isSuccess;
+    private String code;
+    private String message;
+    private LetterCreateResponseDTO.CreateResultDTO result;
+
     @Getter
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class LetterCreateResultDTO {
-        private String result;
+    public static class CreateResultDTO {
+        private String message;
     }
 }

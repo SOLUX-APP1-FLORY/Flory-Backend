@@ -1,6 +1,8 @@
 package flory.FloryServer.web.controller;
 
+import flory.FloryServer.apiPayload.ApiResponse;
 import flory.FloryServer.service.GiftService.LetterCreateService;
+import flory.FloryServer.web.dto.DiaryCreateResponseDTO;
 import flory.FloryServer.web.dto.LetterCreateRequestDTO;
 import flory.FloryServer.web.dto.LetterCreateResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,7 @@ public class LetterCreateRestController {
     private final LetterCreateService letterCreateService;
 
     @PostMapping("/letter")
-    public LetterCreateResponseDTO.LetterCreateResultDTO createletter(@RequestHeader("Authorization") String token, @RequestBody LetterCreateRequestDTO.LetterCreateDTO requestDTO) {
+    public ApiResponse<LetterCreateResponseDTO.CreateResultDTO> createletter(@RequestHeader("Authorization") String token, @RequestBody LetterCreateRequestDTO.LetterCreateDTO requestDTO) {
         return letterCreateService.createletter(token, requestDTO);
     }
 }
