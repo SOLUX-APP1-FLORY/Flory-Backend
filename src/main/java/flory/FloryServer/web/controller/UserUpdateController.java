@@ -6,8 +6,6 @@ import flory.FloryServer.web.dto.UserUpdateRequestDTO;
 import flory.FloryServer.web.dto.UserUpdateResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,13 +15,12 @@ public class UserUpdateController {
     private final UserUpdateService userUpdateService;
 
     @PatchMapping("/member")
-    public ApiResponse<UserUpdateResponseDTO.UpdateResultDTO> userUpdate(@RequestHeader String token, @RequestBody @Valid UserUpdateRequestDTO.UpdateDTO requestDTO) {
-        int id = requestDTO.getId();
+    public ApiResponse<UserUpdateResponseDTO> userUpdate(@RequestBody @Valid UserUpdateRequestDTO.UpdateDTO requestDTO) {
 
         // 사용자 정보 업데이트
-        UserUpdateResponseDTO.UpdateResultDTO resultDTO = userUpdateService.updateUser(id, requestDTO);
+        UserUpdateResponseDTO responseDTO = userUpdateService.updateUser(requestDTO);
 
         // 성공 응답 생성
-        return ApiResponse.onSuccess(resultDTO);
+        return ApiResponse.onSuccess(responseDTO);
     }
 }

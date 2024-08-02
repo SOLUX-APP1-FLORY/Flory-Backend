@@ -31,18 +31,27 @@ public class BouquetInfoService {
         String username = jwtUtil.getUidFromToken(jwtToken);
 
         if (!jwtUtil.validateToken(jwtToken)) {
-            throw new RuntimeException("Invalid token");
+            return BouquetInfoResponseDTO.builder()
+                    .isSuccess(false)
+                    .code("TOKEN_INVALID")
+                    .message("Invalid token")
+                    .result(null)
+                    .build();
         }
 
-        Optional<User> user1Optional = userRepository.findByUid(username);
-        if (user1Optional.isEmpty()) {
-            throw new RuntimeException("User not found");
+        Optional<User> userOptional = userRepository.findByUid(username);
+        if (userOptional.isEmpty()) {
+            return BouquetInfoResponseDTO.builder()
+                    .isSuccess(false)
+                    .code("USER_NOT_FOUND")
+                    .message("User not found")
+                    .result(null)
+                    .build();
         }
-        User user = user1Optional.get();
+        User user = userOptional.get();
 
         // 해당 사용자가 받은 선물 목록 조회
         List<Gift> gifts = giftRepository.findByTarget(user);
-
 
         // GiftResponseDTO로 변환
         List<BouquetInfoResponseDTO.Gift> dtoGifts = gifts.stream()

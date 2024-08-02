@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class DiaryListService {
-
     @Autowired
     private DiaryRepository diaryRepository;
 
@@ -29,7 +28,12 @@ public class DiaryListService {
         String username = jwtUtil.getUidFromToken(jwtToken);
 
         if (!jwtUtil.validateToken(jwtToken)) {
-            throw new RuntimeException("Invalid token");
+            return DiaryListResponseDTO.builder()
+                    .isSuccess(false)
+                    .code("TOKEN_INVALID")
+                    .message("Invalid token")
+                    .result(null)
+                    .build();
         }
 
         // 주어진 연도, 월, 일로 LocalDateTime 객체 생성
@@ -57,7 +61,7 @@ public class DiaryListService {
                 .isSuccess(true)
                 .code("COMMON200")
                 .message("성공입니다.")
-                .result(dtoDiaries) // 수정된 result 타입에 맞춰 결과 설정
+                .result(dtoDiaries)
                 .build();
     }
 }
