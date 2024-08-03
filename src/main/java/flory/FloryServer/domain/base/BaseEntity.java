@@ -8,8 +8,6 @@ import lombok.Getter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -20,14 +18,15 @@ public abstract class BaseEntity {
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now(ZoneId.of("UTC"));
+        createdAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now(ZoneId.of("UTC"));
+        updatedAt = LocalDateTime.now();
     }
 
+    // Getter and Setter for createdAt and updatedAt
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -42,14 +41,5 @@ public abstract class BaseEntity {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    // 추가된 메서드: KST로 변환
-    public LocalDateTime getCreatedAtInKST() {
-        return createdAt.atZone(ZoneId.of("UTC")).withZoneSameInstant(ZoneId.of("Asia/Seoul")).toLocalDateTime();
-    }
-
-    public LocalDateTime getUpdatedAtInKST() {
-        return updatedAt.atZone(ZoneId.of("UTC")).withZoneSameInstant(ZoneId.of("Asia/Seoul")).toLocalDateTime();
     }
 }
