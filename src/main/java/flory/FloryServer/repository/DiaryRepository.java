@@ -22,8 +22,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
     Optional<Diary> findByCreatedAt(LocalDateTime createdAt);
 
     // 특정 사용자가 이번 달에 작성한 일기의 개수를 가져오는 메서드
-    @Query("SELECT COUNT(d) FROM Diary d WHERE d.user.id = :userId AND YEAR(d.createdAt) = :year AND MONTH(d.createdAt) = :month")
-    int countByUserIdAndMonth(@Param("userId") Long userId, @Param("year") int year, @Param("month") int month);
+    @Query(value = "SELECT DISTINCT DATE(created_at) FROM diary WHERE user_id = :userId AND YEAR(created_at) = :year AND MONTH(created_at) = :month", nativeQuery = true)
+    List<LocalDate> findDistinctDatesByUserIdAndMonth(@Param("userId") Long userId, @Param("year") int year, @Param("month") int month);
 
     Optional<Diary> findByUserId(Long userId);
     List<Diary> findByUserUid(String uid);

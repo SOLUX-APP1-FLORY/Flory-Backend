@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,9 +45,10 @@ public class DiaryCountService {
         int currentYear = currentDate.getYear();
         int currentMonth = currentDate.getMonthValue();
 
-        // 일기 개수 조회
-        return diaryRepository.countByUserIdAndMonth(user.getId(), currentYear, currentMonth);
+        // 작성한 날짜 조회
+        List<LocalDate> distinctDates = diaryRepository.findDistinctDatesByUserIdAndMonth(user.getId(), currentYear, currentMonth);
+
+        // 중복 제거된 날짜 개수 반환
+        return distinctDates.size();
     }
-
-
 }
