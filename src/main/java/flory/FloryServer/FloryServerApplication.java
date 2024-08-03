@@ -15,10 +15,4 @@ public class FloryServerApplication {
 		SpringApplication.run(FloryServerApplication.class, args);
 	}
 
-	@PostConstruct
-	public void init() {
-		// 타임존 설정
-		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
-	}
-
 }
