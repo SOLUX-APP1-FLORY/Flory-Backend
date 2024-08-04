@@ -1,9 +1,6 @@
 package flory.FloryServer.web.dto;
 
-import flory.FloryServer.domain.enums.Gender;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 public class DiaryModifyRequestDTO {
 
@@ -11,7 +8,7 @@ public class DiaryModifyRequestDTO {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ModifyDTO{
+    public static class DiaryModifyDTO {
         private Long diary_id;
         private String title;
         private String content;

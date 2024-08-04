@@ -17,10 +17,13 @@ public class UserInfoController {
     private final UserInfoService userInfoService;
 
     @GetMapping("/user")
-    public ApiResponse<UserInfoResponseDTO> infoUser(@RequestHeader("Authorization") String token) {
+    public ApiResponse<UserInfoResponseDTO.UserDetailDTO> infoUser(@RequestHeader("Authorization") String token) {
         UserInfoResponseDTO responseDTO = userInfoService.infoUser(token);
 
-        // 성공 응답 생성
-        return ApiResponse.onSuccess(responseDTO);
+        if (responseDTO.isSuccess()) {
+            return ApiResponse.onSuccess(responseDTO.getResult());
+        } else {
+            return ApiResponse.onFailure(responseDTO.getCode(), responseDTO.getMessage(), null);
+        }
     }
 }

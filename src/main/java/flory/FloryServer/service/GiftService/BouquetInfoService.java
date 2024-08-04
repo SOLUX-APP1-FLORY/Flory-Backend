@@ -64,7 +64,7 @@ public class BouquetInfoService {
                         .giftId(gift.getId())
                         .sender(gift.getUser().getNickname()) // 선물 보낸 사용자 닉네임
                         .bouquetId(gift.getFlower().getId())
-                        .bouquetUrl(gift.getFlower().getFlowerUrl()) // bouquetUrl에 flowerUrl 설정
+                        .bouquetUrl(gift.getFlower().getBouquetUrl()) // bouquetUrl을 개별적으로 설정
                         .build())
                 .collect(Collectors.toList());
 

@@ -6,13 +6,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +26,28 @@ public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
     private final UserDetailsService userDetailsService;
+
+    private static final String[] ALLOWED_URIS = {
+            "/error",
+            "/api/v1/signup",
+            "/api/v1/auth/login",
+            "/api/v1/neighbor/follow",
+            "/api/v1/neighbor/unfollow",
+            "/api/v1/neighbor",
+            "/api/v1/gift/letter",
+            "/api/v1/diary",
+            "/api/v1/user",
+            "/api/v1/member",
+            "/api/v1/user/search",
+            "/api/v1/main",
+            "/api/v1/main/diaries",
+            "/api/v1/gift/{giftId}/letter",
+            "/api/v1/gift/bouquet",
+            "/api/v1/diaries",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-ui.html"
+    };
 
     public SecurityConfig(JwtRequestFilter jwtRequestFilter, UserDetailsService userDetailsService) {
         this.jwtRequestFilter = jwtRequestFilter;
@@ -29,15 +57,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // CSRF 보호 비활성화
                 .csrf(csrf -> csrf
-                        .disable()
+                        .disable()  // CSRF 보호 비활성화
                 )
+                .cors(withDefaults()) // CORS 설정 추가
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers("/auth/login").permitAll()  // 로그인 및 회원가입 엔드포인트를 허용
-                        .requestMatchers("/api/v1/member").permitAll()
-                        .anyRequest().permitAll()
+                        .requestMatchers(ALLOWED_URIS).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Stateless 설정
@@ -58,4 +84,20 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://3.37.34.30:8080");
+        configuration.addAllowedOrigin("http://localhost:8080");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
 }
+

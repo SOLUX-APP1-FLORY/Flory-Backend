@@ -4,6 +4,7 @@ import flory.FloryServer.domain.User;
 import flory.FloryServer.repository.UserRepository;
 import flory.FloryServer.login.jwt.JwtUtil;
 import flory.FloryServer.web.dto.UserInfoResponseDTO;
+import flory.FloryServer.web.dto.UserModifyResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,31 +31,32 @@ public class UserInfoService {
         String userId = jwtUtil.getUidFromToken(jwtToken);
 
         Optional<User> userOptional = userRepository.findByUid(userId);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-
-            UserInfoResponseDTO.InfoResultDTO result = UserInfoResponseDTO.InfoResultDTO.builder()
-                    .userId(user.getUid())
-                    .nickname(user.getNickname())
-                    .birthdate(user.getBirthdate())
-                    .email(user.getEmail())
-                    .gender(user.getGender())
-                    .createdAt(user.getCreatedAt())
-                    .build();
-
-            return UserInfoResponseDTO.builder()
-                    .isSuccess(true)
-                    .code("USER_FOUND")
-                    .message("User found")
-                    .result(result)
-                    .build();
-        } else {
+        if (userOptional.isEmpty()) {
             return UserInfoResponseDTO.builder()
                     .isSuccess(false)
-                    .code("USER_NOT_FOUND")
-                    .message("User not found")
+                    .code("USER4004")
+                    .message("사용자를 찾을 수 없습니다.")
                     .result(null)
                     .build();
         }
-    }
+        User user = userOptional.get();
+
+        UserInfoResponseDTO.UserDetailDTO result = UserInfoResponseDTO.UserDetailDTO.builder()
+                .userId(user.getUid())
+                .nickname(user.getNickname())
+                .birthdate(user.getBirthdate())
+                .email(user.getEmail())
+                .gender(user.getGender())
+                .createdAt(user.getCreatedAt())
+                .build();
+
+        return UserInfoResponseDTO.builder()
+                .isSuccess(true)
+                .code("USER_FOUND")
+                .message("User found")
+                .result(result)
+                .build();
+        }
 }
+
+

@@ -48,7 +48,7 @@ public class JwtAuthenticationController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/login") // 중복된 '/auth' 제거
+    @PostMapping("/login")
     public ApiResponse<LoginResponseDTO.loginDTO> createAuthenticationToken(@RequestBody LoginRequestDTO loginRequestDTO) {
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -37,8 +37,8 @@ public class Gift extends BaseEntity {
     // private Flower bouquet;
     private Flower flower;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id")
-    private Card card;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "card_id")
+//    private Card card;
 
 }

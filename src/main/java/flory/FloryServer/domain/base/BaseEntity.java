@@ -8,6 +8,8 @@ import lombok.Getter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -18,12 +20,14 @@ public abstract class BaseEntity {
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
+        ZoneId seoulZoneId = ZoneId.of("Asia/Seoul");
+        createdAt = ZonedDateTime.now(seoulZoneId).toLocalDateTime();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        ZoneId seoulZoneId = ZoneId.of("Asia/Seoul");
+        updatedAt = ZonedDateTime.now(seoulZoneId).toLocalDateTime();
     }
 
     // Getter and Setter for createdAt and updatedAt

@@ -43,7 +43,7 @@ public class UserModifyService {
         if (userOptional.isEmpty()) {
             return UserModifyResponseDTO.builder()
                     .isSuccess(false)
-                    .code("USER404")
+                    .code("USER4004")
                     .message("사용자를 찾을 수 없습니다.")
                     .result(null)
                     .build();
